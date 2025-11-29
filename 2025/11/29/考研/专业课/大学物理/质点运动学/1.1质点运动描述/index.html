@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/kaorimiyazono518/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/kaorimiyazono518/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/kaorimiyazono518/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/kaorimiyazono518/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/kaorimiyazono518/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kaorimiyazono518.github.io","root":"/kaorimiyazono518/","images":"/kaorimiyazono518/images","scheme":"Muse","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/kaorimiyazono518/js/config.js" defer></script>
+
+    <meta name="description" content="目录 经典力学概述  质点的概念  确定质点位置的方法  运动方程  位移  速度  加速度  直角坐标系下的表示  极坐标系中的径向速度  质点运动学的基本问题  例题解析  思考题解答   经典力学概述运动学与动力学 运动学：从几何观点来研究和描述物体机械运动规律，研究”怎样动”的问题  动力学：从受力的角度来研究和描述物体机械运动规律，研究”为什么动”的问题  运动状态：用位置、速度、加速度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.1 质点运动描述">
+<meta property="og:url" content="https://kaorimiyazono518.github.io/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.1%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="目录 经典力学概述  质点的概念  确定质点位置的方法  运动方程  位移  速度  加速度  直角坐标系下的表示  极坐标系中的径向速度  质点运动学的基本问题  例题解析  思考题解答   经典力学概述运动学与动力学 运动学：从几何观点来研究和描述物体机械运动规律，研究”怎样动”的问题  动力学：从受力的角度来研究和描述物体机械运动规律，研究”为什么动”的问题  运动状态：用位置、速度、加速度">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-11-29T07:16:50.639Z">
+<meta property="article:modified_time" content="2025-11-29T07:13:05.357Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kaorimiyazono518.github.io/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.1%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://kaorimiyazono518.github.io/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.1%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0/","path":"2025/11/29/考研/专业课/大学物理/质点运动学/1.1质点运动描述/","title":"1.1 质点运动描述"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>1.1 质点运动描述 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/kaorimiyazono518/js/utils.js" defer></script><script src="/kaorimiyazono518/js/motion.js" defer></script><script src="/kaorimiyazono518/js/sidebar.js" defer></script><script src="/kaorimiyazono518/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/kaorimiyazono518/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/kaorimiyazono518/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/kaorimiyazono518/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/kaorimiyazono518/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/kaorimiyazono518/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/kaorimiyazono518/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/kaorimiyazono518/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/kaorimiyazono518/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">经典力学概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E5%AD%A6%E4%B8%8E%E5%8A%A8%E5%8A%9B%E5%AD%A6"><span class="nav-number">2.1.</span> <span class="nav-text">运动学与动力学</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E5%8A%9B%E5%AD%A6%E4%B8%BB%E8%A6%81%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">经典力学主要内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A8%E7%82%B9%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">3.</span> <span class="nav-text">质点的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E8%B4%A8%E7%82%B9%E4%BD%8D%E7%BD%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">确定质点位置的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E7%B3%BB"><span class="nav-number">4.1.</span> <span class="nav-text">参考系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E7%BD%AE%E7%A1%AE%E5%AE%9A%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">位置确定方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">运动方程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">5.2.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="nav-number">5.3.</span> <span class="nav-text">表示方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%A7%BB"><span class="nav-number">6.</span> <span class="nav-text">位移</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">6.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E5%8C%BA%E5%88%AB"><span class="nav-number">6.2.</span> <span class="nav-text">重要区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9F%E5%BA%A6"><span class="nav-number">7.</span> <span class="nav-text">速度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-2"><span class="nav-number">7.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%87%8F%E8%A1%A8%E7%A4%BA"><span class="nav-number">7.2.</span> <span class="nav-text">分量表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9F%E7%8E%87"><span class="nav-number">7.3.</span> <span class="nav-text">速率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E5%BA%A6"><span class="nav-number">8.</span> <span class="nav-text">加速度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89-3"><span class="nav-number">8.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%87%8F%E8%A1%A8%E7%A4%BA-1"><span class="nav-number">8.2.</span> <span class="nav-text">分量表示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E8%A7%92%E5%9D%90%E6%A0%87%E7%B3%BB%E4%B8%8B%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">9.</span> <span class="nav-text">直角坐标系下的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E7%A7%BB%E8%A1%A8%E7%A4%BA"><span class="nav-number">9.1.</span> <span class="nav-text">位移表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E9%80%9F%E5%BA%A6%E5%A4%A7%E5%B0%8F%E5%92%8C%E6%96%B9%E5%90%91"><span class="nav-number">9.2.</span> <span class="nav-text">加速度大小和方向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%9D%90%E6%A0%87%E7%B3%BB%E4%B8%AD%E7%9A%84%E5%BE%84%E5%90%91%E9%80%9F%E5%BA%A6"><span class="nav-number">10.</span> <span class="nav-text">极坐标系中的径向速度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E5%BE%84%E5%90%91%E9%80%9F%E5%BA%A6%E6%98%AF-frac-dr-dt"><span class="nav-number">10.1.</span> <span class="nav-text">证明径向速度是 $\frac{dr}{dt}$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">质点运动学的基本问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%B1%BB%E5%9E%8B%E4%B8%80%EF%BC%9A%E5%B7%B2%E7%9F%A5%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B"><span class="nav-number">11.1.</span> <span class="nav-text">问题类型一：已知运动方程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%B1%BB%E5%9E%8B%E4%BA%8C%EF%BC%9A%E5%B7%B2%E7%9F%A5%E5%8A%A0%E9%80%9F%E5%BA%A6%E5%92%8C%E5%88%9D%E5%A7%8B%E6%9D%A1%E4%BB%B6"><span class="nav-number">11.2.</span> <span class="nav-text">问题类型二：已知加速度和初始条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E9%A2%98%E8%A7%A3%E6%9E%90"><span class="nav-number">12.</span> <span class="nav-text">例题解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%981%EF%BC%9A%E8%B7%AF%E7%81%AF%E4%BA%BA%E5%BD%B1%E9%97%AE%E9%A2%98"><span class="nav-number">12.1.</span> <span class="nav-text">例题1：路灯人影问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E9%A2%982%EF%BC%9A%E5%8F%98%E5%8A%A0%E9%80%9F%E5%BA%A6%E7%9B%B4%E7%BA%BF%E8%BF%90%E5%8A%A8"><span class="nav-number">12.2.</span> <span class="nav-text">例题2：变加速度直线运动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="nav-number">13.</span> <span class="nav-text">思考题解答</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E9%A2%981%EF%BC%9A%E5%9C%B0%E7%90%83%E5%8F%AF%E5%90%A6%E7%9C%8B%E4%BD%9C%E8%B4%A8%E7%82%B9%EF%BC%9F"><span class="nav-number">13.1.</span> <span class="nav-text">思考题1：地球可否看作质点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E9%A2%982%EF%BC%9A-frac-dr-dt-%E6%98%AF%E9%80%9F%E7%8E%87%E5%90%97%EF%BC%9F"><span class="nav-number">13.2.</span> <span class="nav-text">思考题2：$\frac{dr}{dt}$ 是速率吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83%E9%A2%983%EF%BC%9A%E5%BE%84%E5%90%91%E9%80%9F%E5%BA%A6%E4%B8%8E%E6%A8%AA%E5%90%91%E9%80%9F%E5%BA%A6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">13.3.</span> <span class="nav-text">思考题3：径向速度与横向速度的区别</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/kaorimiyazono518/archives/">
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/kaorimiyazono518/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/kaorimiyazono518/tags/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.1%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="1.1 质点运动描述 | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          1.1 质点运动描述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-11-29 15:16:50 / Modified: 15:13:05" itemprop="dateCreated datePublished" datetime="2025-11-29T15:16:50+08:00">2025-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">专业课</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">大学物理</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E5%8A%9B%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">力学</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><p>经典力学概述</p>
+</li>
+<li><p>质点的概念</p>
+</li>
+<li><p>确定质点位置的方法</p>
+</li>
+<li><p>运动方程</p>
+</li>
+<li><p>位移</p>
+</li>
+<li><p>速度</p>
+</li>
+<li><p>加速度</p>
+</li>
+<li><p>直角坐标系下的表示</p>
+</li>
+<li><p>极坐标系中的径向速度</p>
+</li>
+<li><p>质点运动学的基本问题</p>
+</li>
+<li><p>例题解析</p>
+</li>
+<li><p>思考题解答</p>
+</li>
+</ul>
+<h2 id="经典力学概述"><a href="#经典力学概述" class="headerlink" title="经典力学概述"></a>经典力学概述</h2><h3 id="运动学与动力学"><a href="#运动学与动力学" class="headerlink" title="运动学与动力学"></a>运动学与动力学</h3><ul>
+<li><p><strong>运动学</strong>：从几何观点来研究和描述物体机械运动规律，研究”怎样动”的问题</p>
+</li>
+<li><p><strong>动力学</strong>：从受力的角度来研究和描述物体机械运动规律，研究”为什么动”的问题</p>
+</li>
+<li><p><strong>运动状态</strong>：用位置、速度、加速度等物理量来描述在某一时刻物体状态的</p>
+</li>
+<li><p><strong>运动学的核心</strong>：运动方程</p>
+</li>
+</ul>
+<h3 id="经典力学主要内容"><a href="#经典力学主要内容" class="headerlink" title="经典力学主要内容"></a>经典力学主要内容</h3><ul>
+<li><p>质点运动的描述</p>
+</li>
+<li><p>圆周运动与一般曲线运动</p>
+</li>
+<li><p>相对运动</p>
+</li>
+<li><p>牛顿定律</p>
+</li>
+<li><p>动量守恒和能量守恒定律</p>
+</li>
+<li><p>刚体的转动</p>
+</li>
+</ul>
+<h2 id="质点的概念"><a href="#质点的概念" class="headerlink" title="质点的概念"></a>质点的概念</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
+<li><p><strong>质点</strong>：只具有质量而没有大小和形状的”理想物体”</p>
+</li>
+<li><p><strong>理想模型</strong>：一种科学思维方法</p>
+<ul>
+<li><p>根据所研究问题的性质，突出主要因素，忽略次要因素</p>
+</li>
+<li><p>使问题简化但又不失客观真实性的一种抽象思维方法</p>
+</li>
+<li><p>例子：质点、刚体、线性弹簧振子、理想气体、点电荷及光滑平面、细绳、无阻尼振动、绝热过程等</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="确定质点位置的方法"><a href="#确定质点位置的方法" class="headerlink" title="确定质点位置的方法"></a>确定质点位置的方法</h2><h3 id="参考系"><a href="#参考系" class="headerlink" title="参考系"></a>参考系</h3><p>描述物体运动时被选作参考的其他物体或物体系，称为”参考系”或”参照系”</p>
+<h3 id="位置确定方法"><a href="#位置确定方法" class="headerlink" title="位置确定方法"></a>位置确定方法</h3><ol>
+<li><p><strong>坐标法</strong>：选定三维坐标系，用坐标值 $(x, y, z)$ 来表示空间一质点的位置</p>
+</li>
+<li><p><strong>位矢法</strong>：选一固定点0，由0点向质点P引一矢量 $\vec{r}$（位置矢量，位矢）</p>
+</li>
+<li><p><strong>自然法</strong>：在已知运动轨迹上任选一固定点0，规定一正方向，曲线长度 $s$ 称自然坐标</p>
+</li>
+</ol>
+<h2 id="运动方程"><a href="#运动方程" class="headerlink" title="运动方程"></a>运动方程</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>用以确定在选定的参考系中质点相对坐标系的位置随时间变化的数学表达式：</p>
+<p><strong>坐标形式</strong>：<br>$x &#x3D; x(t), y &#x3D; y(t), z &#x3D; z(t)$</p>
+<p><strong>位矢形式</strong>：<br>$\vec{r} &#x3D; \vec{r}(t)$</p>
+<p><strong>自然坐标形式</strong>：<br>$s &#x3D; f(t)$</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>抛体运动：<br>$\vec{r} &#x3D; \vec{v}_0 t + \frac{1}{2} \vec{g} t^2$</p>
+<h3 id="表示方法"><a href="#表示方法" class="headerlink" title="表示方法"></a>表示方法</h3><ul>
+<li><p>位矢法</p>
+</li>
+<li><p>坐标法</p>
+</li>
+<li><p>自然法</p>
+</li>
+</ul>
+<h2 id="位移"><a href="#位移" class="headerlink" title="位移"></a>位移</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li><p><strong>位矢</strong>：位置矢量 $\vec{r}$</p>
+</li>
+<li><p><strong>位移</strong>：质点在某一段时间内位矢的增量 $\Delta \vec{r} &#x3D; \vec{r}_B - \vec{r}_A$</p>
+</li>
+<li><p><strong>路程</strong>：实际运动轨迹的长度</p>
+</li>
+<li><p><strong>时间与时刻</strong>：重要的时间概念区分</p>
+</li>
+</ul>
+<h3 id="重要区别"><a href="#重要区别" class="headerlink" title="重要区别"></a>重要区别</h3><ul>
+<li><p>位移大小：$|\Delta \vec{r}| &#x3D; |\vec{r}_B - \vec{r}_A|$</p>
+</li>
+<li><p>位矢大小的增量：$\Delta r &#x3D; |\vec{r}_B| - |\vec{r}_A|$</p>
+</li>
+<li><p>$\Delta r$ 与 $|\Delta \vec{r}|$ 不相同</p>
+</li>
+</ul>
+<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><ul>
+<li><p><strong>平均速度</strong>：<br>$\vec{v} &#x3D; \frac{\Delta \vec{r}}{\Delta t}$</p>
+</li>
+<li><p><strong>瞬时速度</strong>：<br>$\vec{v} &#x3D; \lim_{\Delta t \to 0} \frac{\vec{r}(t + \Delta t) - \vec{r}(t)}{\Delta t} &#x3D; \lim_{\Delta t \to 0} \frac{\Delta \vec{r}}{\Delta t} &#x3D; \frac{d\vec{r}}{dt}$</p>
+</li>
+</ul>
+<h3 id="分量表示"><a href="#分量表示" class="headerlink" title="分量表示"></a>分量表示</h3><p>$\vec{v} &#x3D; v_x \vec{i} + v_y \vec{j} + v_z \vec{k} &#x3D; \frac{dx}{dt} \vec{i} + \frac{dy}{dt} \vec{j} + \frac{dz}{dt} \vec{k}$</p>
+<h3 id="速率"><a href="#速率" class="headerlink" title="速率"></a>速率</h3><p>速度的大小：<br>$v &#x3D; |\vec{v}| &#x3D; \sqrt{v_x^2 + v_y^2 + v_z^2}$</p>
+<h2 id="加速度"><a href="#加速度" class="headerlink" title="加速度"></a>加速度</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><ul>
+<li><p><strong>速度的增量</strong>：$\Delta \vec{v} &#x3D; \vec{v}<em>{P2} - \vec{v}</em>{P1}$</p>
+</li>
+<li><p><strong>平均加速度</strong>：<br>$\vec{a} &#x3D; \frac{\Delta \vec{v}}{\Delta t}$</p>
+</li>
+<li><p><strong>瞬时加速度</strong>：<br>$\vec{a} &#x3D; \lim_{\Delta t \to 0} \frac{\Delta \vec{v}}{\Delta t} &#x3D; \frac{d\vec{v}}{dt} &#x3D; \frac{d^2 \vec{r}}{dt^2}$</p>
+</li>
+</ul>
+<h3 id="分量表示-1"><a href="#分量表示-1" class="headerlink" title="分量表示"></a>分量表示</h3><p>$\vec{a} &#x3D; \frac{d\vec{v}}{dt} &#x3D; \frac{dv_x}{dt} \vec{i} + \frac{dv_y}{dt} \vec{j} + \frac{dv_z}{dt} \vec{k}$<br>$\vec{a} &#x3D; \frac{d^2 \vec{r}}{dt^2} &#x3D; \frac{d^2 x}{dt^2} \vec{i} + \frac{d^2 y}{dt^2} \vec{j} + \frac{d^2 z}{dt^2} \vec{k}$</p>
+<p><strong>加速度分量</strong>：<br>$a_x &#x3D; \frac{dv_x}{dt} &#x3D; \frac{d^2 x}{dt^2}$<br>$a_y &#x3D; \frac{dv_y}{dt} &#x3D; \frac{d^2 y}{dt^2}$<br>$a_z &#x3D; \frac{dv_z}{dt} &#x3D; \frac{d^2 z}{dt^2}$</p>
+<h2 id="直角坐标系下的表示"><a href="#直角坐标系下的表示" class="headerlink" title="直角坐标系下的表示"></a>直角坐标系下的表示</h2><h3 id="位移表示"><a href="#位移表示" class="headerlink" title="位移表示"></a>位移表示</h3><p><strong>位矢</strong>：<br>$\vec{r}_1 &#x3D; x_1 \vec{i} + y_1 \vec{j} + z_1 \vec{k}$<br>$\vec{r}_2 &#x3D; x_2 \vec{i} + y_2 \vec{j} + z_2 \vec{k}$</p>
+<p><strong>位移</strong>：<br>$\Delta \vec{r} &#x3D; \vec{r}_2 - \vec{r}_1 &#x3D; \Delta x \vec{i} + \Delta y \vec{j} + \Delta z \vec{k}$<br>$&#x3D; (x_2 - x_1) \vec{i} + (y_2 - y_1) \vec{j} + (z_2 - z_1) \vec{k}$</p>
+<p><strong>位移大小</strong>：<br>$|\Delta \vec{r}| &#x3D; |\vec{r}_2 - \vec{r}_1| &#x3D; \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}$</p>
+<p><strong>位移方向</strong>：<br>$\cos \alpha &#x3D; \frac{\Delta x}{|\Delta \vec{r}|}, \cos \beta &#x3D; \frac{\Delta y}{|\Delta \vec{r}|}, \cos \gamma &#x3D; \frac{\Delta z}{|\Delta \vec{r}|}$</p>
+<h3 id="加速度大小和方向"><a href="#加速度大小和方向" class="headerlink" title="加速度大小和方向"></a>加速度大小和方向</h3><p><strong>加速度大小</strong>：<br>$a &#x3D; \sqrt{a_x^2 + a_y^2 + a_z^2} &#x3D; \sqrt{\left( \frac{dv_x}{dt} \right)^2 + \left( \frac{dv_y}{dt} \right)^2 + \left( \frac{dv_z}{dt} \right)^2}$<br>$&#x3D; \sqrt{\left( \frac{d^2 x}{dt^2} \right)^2 + \left( \frac{d^2 y}{dt^2} \right)^2 + \left( \frac{d^2 z}{dt^2} \right)^2}$</p>
+<p><strong>速度和加速度的方向</strong>（用三个方位角 $\alpha, \beta, \gamma$ 表示）：<br>$\cos \alpha &#x3D; \frac{v_x}{|\vec{v}|}, \cos \beta &#x3D; \frac{v_y}{|\vec{v}|}, \cos \gamma &#x3D; \frac{v_z}{|\vec{v}|}$<br>$\cos \alpha’ &#x3D; \frac{a_x}{|\vec{a}|}, \cos \beta’ &#x3D; \frac{a_y}{|\vec{a}|}, \cos \gamma’ &#x3D; \frac{a_z}{|\vec{a}|}$</p>
+<h2 id="极坐标系中的径向速度"><a href="#极坐标系中的径向速度" class="headerlink" title="极坐标系中的径向速度"></a>极坐标系中的径向速度</h2><h3 id="证明径向速度是-frac-dr-dt"><a href="#证明径向速度是-frac-dr-dt" class="headerlink" title="证明径向速度是 $\frac{dr}{dt}$"></a>证明径向速度是 $\frac{dr}{dt}$</h3><ol>
+<li><p><strong>位置矢量的表示</strong>：<br>在极坐标系中，位置矢量 $\vec{r}$ 可以表示为：<br>$\vec{r} &#x3D; r \vec{e}_r$<br>其中，$\vec{e}_r$ 是径向单位向量，$r$ 是径向距离。</p>
+</li>
+<li><p><strong>速度的计算</strong>：<br>速度 $\vec{v}$ 是位置矢量 $\vec{r}$ 对时间 $t$ 的导数：<br>$\vec{v} &#x3D; \frac{d\vec{r}}{dt} &#x3D; \frac{d}{dt}(r \vec{e}_r)$</p>
+</li>
+<li><p><strong>应用乘积法则</strong>：<br>使用乘积法则展开导数：<br>$\vec{v} &#x3D; \frac{dr}{dt} \vec{e}_r + r \frac{d\vec{e}_r}{dt}$</p>
+</li>
+<li><p><strong>单位向量的导数</strong>：<br>在极坐标系中，径向单位向量 $\vec{e}<em>r$ 随角度 $\theta$ 变化而变化。其时间导数为：<br>$\frac{d\vec{e}<em>r}{dt} &#x3D; \frac{d\theta}{dt} \vec{e}</em>\theta$<br>其中，$\vec{e}</em>\theta$ 是横向单位向量。</p>
+</li>
+<li><p><strong>代入导数表达式</strong>：<br>将 $\frac{d\vec{e}_r}{dt}$ 代入速度表达式：<br>$\vec{v} &#x3D; \frac{dr}{dt} \vec{e}<em>r + r \frac{d\theta}{dt} \vec{e}</em>\theta$</p>
+</li>
+<li><p><strong>径向速度分量</strong>：<br>由此可知，速度的径向分量为 $\frac{dr}{dt}$，横向分量为 $r \frac{d\theta}{dt}$。</p>
+</li>
+</ol>
+<p>通过上述步骤，我们证明了径向速度确实是 $\frac{dr}{dt}$。此外，通过将笛卡尔坐标系中的速度分量转换到极坐标系中，并进行点乘验证，也得到了相同的结果，进一步确认了结论的正确性。</p>
+<p><strong>最终答案</strong>：<br>$\frac{dr}{dt}$</p>
+<h2 id="质点运动学的基本问题"><a href="#质点运动学的基本问题" class="headerlink" title="质点运动学的基本问题"></a>质点运动学的基本问题</h2><h3 id="问题类型一：已知运动方程"><a href="#问题类型一：已知运动方程" class="headerlink" title="问题类型一：已知运动方程"></a>问题类型一：已知运动方程</h3><p><strong>求解方法</strong>：微分法<br>$\vec{v} &#x3D; \frac{d\vec{r}}{dt}, \vec{a} &#x3D; \frac{d\vec{v}}{dt}$</p>
+<h3 id="问题类型二：已知加速度和初始条件"><a href="#问题类型二：已知加速度和初始条件" class="headerlink" title="问题类型二：已知加速度和初始条件"></a>问题类型二：已知加速度和初始条件</h3><p><strong>求解方法</strong>：积分法<br>$\vec{v} - \vec{v}<em>0 &#x3D; \int</em>{t_0}^{t} \vec{a} \cdot dt$<br>$\vec{r} - \vec{r}<em>0 &#x3D; \int</em>{t_0}^{t} \vec{v} \cdot dt$</p>
+<h2 id="例题解析"><a href="#例题解析" class="headerlink" title="例题解析"></a>例题解析</h2><h3 id="例题1：路灯人影问题"><a href="#例题1：路灯人影问题" class="headerlink" title="例题1：路灯人影问题"></a>例题1：路灯人影问题</h3><p><strong>题目</strong>：路灯距地面高h，一人身高l，在路上以匀速$v_0$行走，求人影中头顶的移动速度和影子长度增长的速率。</p>
+<p><strong>解</strong>：<br>根据几何关系：<br>$x^2 &#x3D; l^2 - h^2$</p>
+<p>对时间求导：<br>$v &#x3D; \frac{dx}{dt} &#x3D; \frac{l}{x} \frac{dl}{dt} &#x3D; \frac{\sqrt{x^2 + h^2}}{x} v_0$</p>
+<p><strong>加速度计算</strong>：<br>$a &#x3D; \frac{dv}{dt} &#x3D; \frac{d}{dt} \left( \frac{l}{x} v_0 \right) &#x3D; v_0 \frac{l’ \cdot x - x’ \cdot l}{x^2}$<br>$&#x3D; v_0 \left( \frac{v_0 \cdot x - v \cdot l}{x^2} \right) &#x3D; v_0 \left[ \frac{v_0 \cdot x - (v_0 l &#x2F; x) \cdot l}{x^2} \right]$<br>$&#x3D; v_0^2 \frac{x^2 - l^2}{x^3} &#x3D; -v_0^2 \frac{h^2}{x^3}$</p>
+<p><strong>说明</strong>：小船只沿x方向运动，简化为一维问题，可用标量处理。</p>
+<h3 id="例题2：变加速度直线运动"><a href="#例题2：变加速度直线运动" class="headerlink" title="例题2：变加速度直线运动"></a>例题2：变加速度直线运动</h3><p><strong>题目</strong>：一物体作直线运动，初速度为零，初加速度为 $a_0$，出发后经过时间间隔2秒，加速度均匀增加了 $a_0$，求经过t秒后物体的速度和离开出发点的距离。</p>
+<p><strong>解</strong>：已知加速度：<br>$a &#x3D; a_0 + \frac{a_0}{r} t \quad (r &#x3D; 2s)$</p>
+<p><strong>求速度</strong>：<br>$a &#x3D; \frac{dv}{dt} \Rightarrow dv &#x3D; a dt \Rightarrow dv &#x3D; a dt$<br>$v - 0 &#x3D; \int_{v_0}^{v} dv &#x3D; \int_{0}^{t} a dt &#x3D; \int_{0}^{t} \left( a_0 + \frac{a_0}{r} t \right) dt &#x3D; a_0 t + \frac{a_0}{2r} t^2$</p>
+<p><strong>求位移</strong>：<br>$v &#x3D; \frac{dx}{dt} \Rightarrow dx &#x3D; v dt$<br>$x - 0 &#x3D; \int_{0}^{t} v dt &#x3D; \int_{0}^{t} \left( a_0 t + \frac{a_0}{2r} t^2 \right) dt &#x3D; \frac{a_0}{2} t^2 + \frac{a_0}{6r} t^3$</p>
+<h2 id="思考题解答"><a href="#思考题解答" class="headerlink" title="思考题解答"></a>思考题解答</h2><h3 id="思考题1：地球可否看作质点？"><a href="#思考题1：地球可否看作质点？" class="headerlink" title="思考题1：地球可否看作质点？"></a>思考题1：地球可否看作质点？</h3><p><strong>解答</strong>：<br>地球能否看作质点取决于所研究问题的尺度：</p>
+<ul>
+<li><p>当研究地球绕太阳公转时，地球的尺寸远小于公转轨道半径，可以看作质点</p>
+</li>
+<li><p>当研究地球自转、地球上物体的运动或地球内部结构时，地球不能看作质点</p>
+</li>
+</ul>
+<p><strong>判断标准</strong>：</p>
+<ul>
+<li><p>物体的尺寸远小于运动尺度时，可看作质点</p>
+</li>
+<li><p>物体各点运动状态相同时，可看作质点</p>
+</li>
+</ul>
+<h3 id="思考题2：-frac-dr-dt-是速率吗？"><a href="#思考题2：-frac-dr-dt-是速率吗？" class="headerlink" title="思考题2：$\frac{dr}{dt}$ 是速率吗？"></a>思考题2：$\frac{dr}{dt}$ 是速率吗？</h3><p><strong>解答</strong>：<br>$\frac{dr}{dt}$ 不是速率，而是位矢大小的变化率。</p>
+<p><strong>区别</strong>：</p>
+<ul>
+<li><p>速率 $v &#x3D; |\vec{v}| &#x3D; \sqrt{v_x^2 + v_y^2 + v_z^2}$</p>
+</li>
+<li><p>$\frac{dr}{dt}$ 是位矢模长的变化率</p>
+</li>
+</ul>
+<p><strong>重要关系</strong>：<br>$\frac{dr}{dt} \neq \frac{d|\vec{r}|}{dt}$</p>
+<h3 id="思考题3：径向速度与横向速度的区别"><a href="#思考题3：径向速度与横向速度的区别" class="headerlink" title="思考题3：径向速度与横向速度的区别"></a>思考题3：径向速度与横向速度的区别</h3><p><strong>解答</strong>：<br>在极坐标系中：</p>
+<ul>
+<li><p><strong>径向速度</strong>：$\frac{dr}{dt}$，表示质点沿径向方向的速度分量</p>
+</li>
+<li><p><strong>横向速度</strong>：$r\frac{d\theta}{dt}$，表示质点垂直于径向方向的速度分量</p>
+</li>
+</ul>
+<p><strong>总速度</strong>：<br>$\vec{v} &#x3D; \frac{dr}{dt} \vec{e}<em>r + r \frac{d\theta}{dt} \vec{e}</em>\theta$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/kaorimiyazono518/2025/11/29/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/kaorimiyazono518/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.2%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E4%B8%8E%E4%B8%80%E8%88%AC%E5%B9%B3%E9%9D%A2%E6%9B%B2%E7%BA%BF%E8%BF%90%E5%8A%A8/" rel="next" title="1.2圆周运动与一般平面曲线运动">
+                  1.2圆周运动与一般平面曲线运动 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
