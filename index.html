@@ -76,6 +76,405 @@
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
+  <!-- 自定义顶部导航栏 -->
+  <header class="custom-header">
+  <div class="header-container">
+    
+    <!-- 左侧：可展开的菜单按钮 -->
+    <div class="header-left">
+      <button class="menu-toggle" id="menuToggle">
+        <span class="menu-icon">☰</span>
+        <span class="menu-text">导航</span>
+      </button>
+      
+      <!-- 下拉菜单内容 -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="/kaorimiyazono518/" class="menu-item">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-label">首页</span>
+        </a>
+        <a href="/kaorimiyazono518/about" class="menu-item">
+          <span class="menu-icon">👤</span>
+          <span class="menu-label">关于</span>
+        </a>
+        <a href="/kaorimiyazono518/tags" class="menu-item">
+          <span class="menu-icon">🏷️</span>
+          <span class="menu-label">标签</span>
+        </a>
+        <a href="/kaorimiyazono518/categories" class="menu-item">
+          <span class="menu-icon">📁</span>
+          <span class="menu-label">分类</span>
+        </a>
+        <a href="/kaorimiyazono518/archives" class="menu-item">
+          <span class="menu-icon">📅</span>
+          <span class="menu-label">归档</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- 中间：自定义链接 -->
+    <div class="header-center">
+      <div class="center-links">
+        <a href="https://github.com" target="_blank" class="center-link">GitHub</a>
+        <a href="https://www.bilibili.com/" target="_blank" class="center-link">bilibili</a>
+        <a href="https://chat.deepseek.com/" target="_blank" class="center-link">Deepseek</a>
+        <a target="_blank" rel="noopener" href="https://www.geogebra.org/materials" class="center-link">geogebra</a>
+        <a href="https://tools.pdf24.org/zh/" target="_blank" class="center-link">pdf24</a>
+      </div>
+    </div>
+    
+    <!-- 右侧：实时时间 -->
+    <div class="header-right">
+      <div class="time-display" id="timeDisplay">
+        <span class="date-part"></span>
+        <span class="time-part"></span>
+      </div>
+    </div>
+    
+  </div>
+</header>
+
+<!-- 内联样式 -->
+<style>
+/* 自定义顶部导航栏样式 */
+.custom-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 左侧菜单区域 */
+.header-left {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.menu-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.menu-icon {
+  font-size: 18px;
+}
+
+.menu-text {
+  font-weight: 500;
+}
+
+/* 下拉菜单 */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 10001;
+  padding: 8px 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+  background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+  color: #667eea;
+  border-left: 3px solid #667eea;
+  padding-left: 22px;
+}
+
+.menu-item .menu-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.menu-item .menu-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 中间链接区域 */
+.header-center {
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.center-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  padding: 8px 20px;
+  background: rgba(248, 249, 250, 0.8);
+  border-radius: 30px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.center-links::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.center-link {
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 4px 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.center-link:hover {
+  color: #667eea;
+  transform: translateY(-1px);
+}
+
+.center-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #667eea;
+  transition: width 0.3s ease;
+}
+
+.center-link:hover::after {
+  width: 100%;
+}
+
+/* 右侧时间区域 */
+.header-right {
+  flex: 0 0 auto;
+}
+
+.time-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 15px;
+  background: rgba(248, 249, 250, 0.8);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  min-width: 140px;
+  text-align: center;
+}
+
+.date-part {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.time-part {
+  font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 10px;
+  }
+  
+  .menu-toggle .menu-text {
+    display: none;
+  }
+  
+  .center-links {
+    gap: 15px;
+    padding: 6px 12px;
+    max-width: 200px;
+  }
+  
+  .center-link {
+    font-size: 12px;
+  }
+  
+  .time-display {
+    min-width: 110px;
+    padding: 5px 10px;
+  }
+  
+  .date-part {
+    font-size: 11px;
+  }
+  
+  .time-part {
+    font-size: 12px;
+  }
+}
+
+/* 防止内容被header遮挡 */
+body {
+  padding-top: 70px !important;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px !important;
+  }
+}
+</style>
+
+<!-- 内联脚本 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // ============ 菜单展开/关闭功能 ============
+  const menuToggle = document.getElementById('menuToggle');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  
+  if (menuToggle && dropdownMenu) {
+    // 点击菜单按钮
+    menuToggle.addEventListener('click', function(event) {
+      event.stopPropagation();
+      dropdownMenu.classList.toggle('show');
+    });
+    
+    // 点击页面其他地方关闭菜单
+    document.addEventListener('click', function() {
+      dropdownMenu.classList.remove('show');
+    });
+    
+    // 阻止菜单内部点击事件冒泡
+    dropdownMenu.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+    
+    // 点击菜单项后关闭菜单
+    const menuItems = dropdownMenu.querySelectorAll('.menu-item');
+    menuItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        dropdownMenu.classList.remove('show');
+      });
+    });
+  }
+  
+  // ============ 实时时间功能 ============
+  const datePart = document.querySelector('.date-part');
+  const timePart = document.querySelector('.time-part');
+
+  function updateTime() {
+    const now = new Date();
+    
+    // 获取UTC时间，然后加上8小时得到北京时间
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const beijingTime = new Date(utc + (3600000 * 8));
+    
+    // 获取日期：2025/12/1 格式
+    const year = beijingTime.getFullYear();
+    const month = beijingTime.getMonth() + 1;
+    const day = beijingTime.getDate();
+    const dateStr = `${year}/${month}/${day}`;
+    
+    // 获取时间：12:30:45 格式（精确到秒）
+    const hours = String(beijingTime.getHours()).padStart(2, '0');
+    const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
+    const seconds = String(beijingTime.getSeconds()).padStart(2, '0');
+    const timeStr = `${hours}:${minutes}:${seconds}`;
+    
+    // 更新显示
+    if (datePart) datePart.textContent = dateStr;
+    if (timePart) timePart.textContent = timeStr;
+  }
+
+  // 立即更新一次，然后每秒更新
+  if (datePart && timePart) {
+    updateTime();
+    setInterval(updateTime, 1000); // 每秒更新一次
+  }
+  
+  // ============ 滚动效果 ============
+  const header = document.querySelector('.custom-header');
+  
+  if (header) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 20) {
+        header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
+        header.style.backdropFilter = 'blur(15px)';
+      } else {
+        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        header.style.backdropFilter = 'blur(10px)';
+      }
+    });
+  }
+  
+});
+</script>
+  
+  <!-- 隐藏原来的导航栏 -->
+  <style>
+    .site-nav { display: none !important; }
+    .header { display: none !important; }
+  </style>
+
   <main class="main">
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
@@ -715,6 +1114,152 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%A0%B9%E5%8F%B7%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
+      <meta itemprop="name" content="kaorimiyazono">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kaorimiyazono">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Kaorimiyazono">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/kaorimiyazono518/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%A0%B9%E5%8F%B7%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">根号的处理方法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-19T00:00:00+08:00">2025-10-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-11-29 19:25:33" itemprop="dateModified" datetime="2025-11-29T19:25:33+08:00">2025-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">高数</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="sqrt-的处理"><a href="#sqrt-的处理" class="headerlink" title="$\sqrt{}$ 的处理"></a>$\sqrt{}$ 的处理</h1><p>对于 $\sqrt{}$，我们有四大方法：</p>
+<h2 id="一、两大非负性"><a href="#一、两大非负性" class="headerlink" title="一、两大非负性"></a>一、两大非负性</h2><ol>
+<li><strong>根号下的值非负</strong>：$\sqrt{A}$ 要求 $A \geq 0$</li>
+<li><strong>根号运算的结果非负</strong>：$\sqrt{A} \geq 0$</li>
+</ol>
+<p>三大非负数</p>
+<p>在实数范围内，以下三种形式的结果都是非负数：</p>
+<ol>
+<li><strong>算术平方根</strong>：$\sqrt{a} \geq 0$</li>
+<li><strong>绝对值</strong>：$|a| \geq 0$  </li>
+<li><strong>平方</strong>：$a^2 \geq 0$</li>
+</ol>
+<p>例子： $y &#x3D; \sqrt{x-1} + \sqrt{1-x}$</p>
+<h2 id="二、两种去根号"><a href="#二、两种去根号" class="headerlink" title="二、两种去根号"></a>二、两种去根号</h2><p>1.<strong>从内</strong>：$\sqrt{a}$  $&#x3D;$ $|a|$ $\rightarrow$ 配方法 :</p>
+<p>$$<br>(a \pm b)^2 &#x3D; a^2 \pm 2ab + b^2<br>$$</p>
+<p>2.<strong>从外</strong>：</p>
+<p>$$<br>(\sqrt{a})^2 &#x3D; a \quad \text{其中 } a \geq 0<br>$$</p>
+<h2 id="三、两种有理化"><a href="#三、两种有理化" class="headerlink" title="三、两种有理化"></a>三、两种有理化</h2><p>1.分子有理化</p>
+<p>2.分母有理化</p>
+<h2 id="四、两种换元法"><a href="#四、两种换元法" class="headerlink" title="四、两种换元法"></a>四、两种换元法</h2><p>1.整体换元法：</p>
+<p>例如：$\sqrt{x} &#x3D; t$ 我们进行反解可得到x&#x3D;f(t)，如果f(t)中不带根号，则说明反解过程成功，可以进行整体换元法。</p>
+<p>2.三角换元法：</p>
+<p>基于三角函数的六边形记忆法的特性，我们有三大换元法：</p>
+<p>2.1 $\sqrt{a^2 - x^2}$ 型</p>
+<p><strong>令：</strong> $x &#x3D; a \sin t$</p>
+<p><strong>则：</strong><br>$<br>\sqrt{a^2 - x^2} &#x3D; \sqrt{a^2 - (a \sin t)^2} &#x3D; \sqrt{a^2(1 - \sin^2 t)} &#x3D; a|\cos t|<br>$</p>
+<p><strong>定义域：</strong> $t \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$<br>在此区间内 $\cos t \geq 0$，所以：<br>$\sqrt{a^2 - x^2} &#x3D; a \cos t$</p>
+<p><strong>也可令：</strong> $x &#x3D; a \cos t$</p>
+<p><strong>则：</strong><br>$<br>\sqrt{a^2 - x^2} &#x3D; \sqrt{a^2 - (a \cos t)^2} &#x3D; \sqrt{a^2(1 - \cos^2 t)} &#x3D; a|\sin t|<br>$</p>
+<p><strong>定义域：</strong> $t \in [0, \pi]$<br>在此区间内 $\sin t \geq 0$，所以：<br>$\sqrt{a^2 - x^2} &#x3D; a \sin t$</p>
+<p>2.2$\sqrt{x^2 + a^2}$ 型</p>
+<p><strong>令：</strong> $x &#x3D; a \tan t$</p>
+<p><strong>则：</strong><br>$<br>\sqrt{x^2 + a^2} &#x3D; \sqrt{(a \tan t)^2 + a^2} &#x3D; \sqrt{a^2(\tan^2 t + 1)} &#x3D; a|sec t|<br>$</p>
+<p><strong>定义域：</strong> $t \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$<br>在此区间内 $\sec t &gt; 0$，所以：</p>
+<p>$\sqrt{x^2 + a^2} &#x3D; asect$</p>
+<p>2.3$\sqrt{x^2 - a^2}$</p>
+<p><strong>令：</strong> $x &#x3D; a \sec t$</p>
+<p><strong>则：</strong><br>$<br>\sqrt{x^2 - a^2} &#x3D; \sqrt{(a \sec t)^2 - a^2} &#x3D; \sqrt{a^2(\sec^2 t - 1)} &#x3D; a|\tan t|<br>$</p>
+<p><strong>定义域：</strong> </p>
+<ul>
+<li><p>当 $x \geq a &gt; 0$ 时：$t \in \left[0, \frac{\pi}{2}\right)$</p>
+</li>
+<li><p>当 $x \leq -a &lt; 0$ 时：$t \in \left(\frac{\pi}{2}, \pi\right]$<br>在这两个区间内 $\tan t \geq 0$，所以：</p>
+<p>$$<br>\sqrt{x^2 - a^2} &#x3D; a \tan t<br>$$</p>
+</li>
+</ul>
+<hr>
+<p>类似的，对于积分类的题目，我们也要注意三角换元法的应用：</p>
+<p>例： $\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx$的求解</p>
+<h3 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h3><p><strong>1. 三角代换</strong><br>令 $x &#x3D; \tan t$，则：<br>$<br>\begin{aligned}<br>\arctan x &amp;&#x3D; t \<br>e^{\arctan x} &amp;&#x3D; e^t \<br>1 + x^2 &amp;&#x3D; \sec^2 t \<br>(1+x^2)^{3&#x2F;2} &amp;&#x3D; \sec^3 t \<br>dx &amp;&#x3D; \sec^2 t  dt<br>\end{aligned}<br>$</p>
+<p><strong>2. 积分变换</strong><br>$<br>\begin{aligned}<br>&amp;\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx \<br>&amp;&#x3D; \int \frac{\tan t \cdot e^t}{\sec^3 t} \cdot \sec^2 t  dt \<br>&amp;&#x3D; \int e^t \cdot \tan t \cdot \cos t  dt \<br>&amp;&#x3D; \int e^t \sin t  dt<br>\end{aligned}<br>$</p>
+<p><strong>3. 求解 $\int e^t \sin t  dt$</strong><br>$<br>\int e^t \sin t  dt &#x3D; \frac{1}{2} e^t (\sin t - \cos t) + C<br>$</p>
+<p><strong>4. 变量回代</strong><br>$<br>\begin{aligned}<br>&amp;\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx \<br>&amp;&#x3D; \frac{1}{2} e^{\arctan x} \left( \frac{x}{\sqrt{1+x^2}} - \frac{1}{\sqrt{1+x^2}} \right) + C \<br>&amp;&#x3D; \frac{(x - 1) e^{\arctan x}}{2\sqrt{1+x^2}} + C<br>\end{aligned}<br>$</p>
+<h3 id="最终答案"><a href="#最终答案" class="headerlink" title="最终答案"></a>最终答案</h3><p>$$<br>\boxed{\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx &#x3D; \frac{(x - 1) e^{\arctan x}}{2\sqrt{1+x^2}} + C}<br>$$</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E8%8B%B1%E8%AF%AD/%E5%8D%95%E8%AF%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -895,152 +1440,6 @@
 <p>②等价表处理乘除以及函数内层</p>
 <p>③泰勒展开式处理加减乘除</p>
 <p>④不得已洛必达法则</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%A0%B9%E5%8F%B7%E5%A4%84%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%A0%B9%E5%8F%B7%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">根号的处理方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-19T00:00:00+08:00">2025-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-29 19:25:33" itemprop="dateModified" datetime="2025-11-29T19:25:33+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">高数</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="sqrt-的处理"><a href="#sqrt-的处理" class="headerlink" title="$\sqrt{}$ 的处理"></a>$\sqrt{}$ 的处理</h1><p>对于 $\sqrt{}$，我们有四大方法：</p>
-<h2 id="一、两大非负性"><a href="#一、两大非负性" class="headerlink" title="一、两大非负性"></a>一、两大非负性</h2><ol>
-<li><strong>根号下的值非负</strong>：$\sqrt{A}$ 要求 $A \geq 0$</li>
-<li><strong>根号运算的结果非负</strong>：$\sqrt{A} \geq 0$</li>
-</ol>
-<p>三大非负数</p>
-<p>在实数范围内，以下三种形式的结果都是非负数：</p>
-<ol>
-<li><strong>算术平方根</strong>：$\sqrt{a} \geq 0$</li>
-<li><strong>绝对值</strong>：$|a| \geq 0$  </li>
-<li><strong>平方</strong>：$a^2 \geq 0$</li>
-</ol>
-<p>例子： $y &#x3D; \sqrt{x-1} + \sqrt{1-x}$</p>
-<h2 id="二、两种去根号"><a href="#二、两种去根号" class="headerlink" title="二、两种去根号"></a>二、两种去根号</h2><p>1.<strong>从内</strong>：$\sqrt{a}$  $&#x3D;$ $|a|$ $\rightarrow$ 配方法 :</p>
-<p>$$<br>(a \pm b)^2 &#x3D; a^2 \pm 2ab + b^2<br>$$</p>
-<p>2.<strong>从外</strong>：</p>
-<p>$$<br>(\sqrt{a})^2 &#x3D; a \quad \text{其中 } a \geq 0<br>$$</p>
-<h2 id="三、两种有理化"><a href="#三、两种有理化" class="headerlink" title="三、两种有理化"></a>三、两种有理化</h2><p>1.分子有理化</p>
-<p>2.分母有理化</p>
-<h2 id="四、两种换元法"><a href="#四、两种换元法" class="headerlink" title="四、两种换元法"></a>四、两种换元法</h2><p>1.整体换元法：</p>
-<p>例如：$\sqrt{x} &#x3D; t$ 我们进行反解可得到x&#x3D;f(t)，如果f(t)中不带根号，则说明反解过程成功，可以进行整体换元法。</p>
-<p>2.三角换元法：</p>
-<p>基于三角函数的六边形记忆法的特性，我们有三大换元法：</p>
-<p>2.1 $\sqrt{a^2 - x^2}$ 型</p>
-<p><strong>令：</strong> $x &#x3D; a \sin t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{a^2 - x^2} &#x3D; \sqrt{a^2 - (a \sin t)^2} &#x3D; \sqrt{a^2(1 - \sin^2 t)} &#x3D; a|\cos t|<br>$</p>
-<p><strong>定义域：</strong> $t \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$<br>在此区间内 $\cos t \geq 0$，所以：<br>$\sqrt{a^2 - x^2} &#x3D; a \cos t$</p>
-<p><strong>也可令：</strong> $x &#x3D; a \cos t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{a^2 - x^2} &#x3D; \sqrt{a^2 - (a \cos t)^2} &#x3D; \sqrt{a^2(1 - \cos^2 t)} &#x3D; a|\sin t|<br>$</p>
-<p><strong>定义域：</strong> $t \in [0, \pi]$<br>在此区间内 $\sin t \geq 0$，所以：<br>$\sqrt{a^2 - x^2} &#x3D; a \sin t$</p>
-<p>2.2$\sqrt{x^2 + a^2}$ 型</p>
-<p><strong>令：</strong> $x &#x3D; a \tan t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{x^2 + a^2} &#x3D; \sqrt{(a \tan t)^2 + a^2} &#x3D; \sqrt{a^2(\tan^2 t + 1)} &#x3D; a|sec t|<br>$</p>
-<p><strong>定义域：</strong> $t \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$<br>在此区间内 $\sec t &gt; 0$，所以：</p>
-<p>$\sqrt{x^2 + a^2} &#x3D; asect$</p>
-<p>2.3$\sqrt{x^2 - a^2}$</p>
-<p><strong>令：</strong> $x &#x3D; a \sec t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{x^2 - a^2} &#x3D; \sqrt{(a \sec t)^2 - a^2} &#x3D; \sqrt{a^2(\sec^2 t - 1)} &#x3D; a|\tan t|<br>$</p>
-<p><strong>定义域：</strong> </p>
-<ul>
-<li><p>当 $x \geq a &gt; 0$ 时：$t \in \left[0, \frac{\pi}{2}\right)$</p>
-</li>
-<li><p>当 $x \leq -a &lt; 0$ 时：$t \in \left(\frac{\pi}{2}, \pi\right]$<br>在这两个区间内 $\tan t \geq 0$，所以：</p>
-<p>$$<br>\sqrt{x^2 - a^2} &#x3D; a \tan t<br>$$</p>
-</li>
-</ul>
-<hr>
-<p>类似的，对于积分类的题目，我们也要注意三角换元法的应用：</p>
-<p>例： $\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx$的求解</p>
-<h3 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h3><p><strong>1. 三角代换</strong><br>令 $x &#x3D; \tan t$，则：<br>$<br>\begin{aligned}<br>\arctan x &amp;&#x3D; t \<br>e^{\arctan x} &amp;&#x3D; e^t \<br>1 + x^2 &amp;&#x3D; \sec^2 t \<br>(1+x^2)^{3&#x2F;2} &amp;&#x3D; \sec^3 t \<br>dx &amp;&#x3D; \sec^2 t  dt<br>\end{aligned}<br>$</p>
-<p><strong>2. 积分变换</strong><br>$<br>\begin{aligned}<br>&amp;\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx \<br>&amp;&#x3D; \int \frac{\tan t \cdot e^t}{\sec^3 t} \cdot \sec^2 t  dt \<br>&amp;&#x3D; \int e^t \cdot \tan t \cdot \cos t  dt \<br>&amp;&#x3D; \int e^t \sin t  dt<br>\end{aligned}<br>$</p>
-<p><strong>3. 求解 $\int e^t \sin t  dt$</strong><br>$<br>\int e^t \sin t  dt &#x3D; \frac{1}{2} e^t (\sin t - \cos t) + C<br>$</p>
-<p><strong>4. 变量回代</strong><br>$<br>\begin{aligned}<br>&amp;\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx \<br>&amp;&#x3D; \frac{1}{2} e^{\arctan x} \left( \frac{x}{\sqrt{1+x^2}} - \frac{1}{\sqrt{1+x^2}} \right) + C \<br>&amp;&#x3D; \frac{(x - 1) e^{\arctan x}}{2\sqrt{1+x^2}} + C<br>\end{aligned}<br>$</p>
-<h3 id="最终答案"><a href="#最终答案" class="headerlink" title="最终答案"></a>最终答案</h3><p>$$<br>\boxed{\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx &#x3D; \frac{(x - 1) e^{\arctan x}}{2\sqrt{1+x^2}} + C}<br>$$</p>
 
       
     </div>

@@ -82,6 +82,405 @@
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
 
+  <!-- 自定义顶部导航栏 -->
+  <header class="custom-header">
+  <div class="header-container">
+    
+    <!-- 左侧：可展开的菜单按钮 -->
+    <div class="header-left">
+      <button class="menu-toggle" id="menuToggle">
+        <span class="menu-icon">☰</span>
+        <span class="menu-text">导航</span>
+      </button>
+      
+      <!-- 下拉菜单内容 -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="/kaorimiyazono518/" class="menu-item">
+          <span class="menu-icon">🏠</span>
+          <span class="menu-label">首页</span>
+        </a>
+        <a href="/kaorimiyazono518/about" class="menu-item">
+          <span class="menu-icon">👤</span>
+          <span class="menu-label">关于</span>
+        </a>
+        <a href="/kaorimiyazono518/tags" class="menu-item">
+          <span class="menu-icon">🏷️</span>
+          <span class="menu-label">标签</span>
+        </a>
+        <a href="/kaorimiyazono518/categories" class="menu-item">
+          <span class="menu-icon">📁</span>
+          <span class="menu-label">分类</span>
+        </a>
+        <a href="/kaorimiyazono518/archives" class="menu-item">
+          <span class="menu-icon">📅</span>
+          <span class="menu-label">归档</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- 中间：自定义链接 -->
+    <div class="header-center">
+      <div class="center-links">
+        <a href="https://github.com" target="_blank" class="center-link">GitHub</a>
+        <a href="https://www.bilibili.com/" target="_blank" class="center-link">bilibili</a>
+        <a href="https://chat.deepseek.com/" target="_blank" class="center-link">Deepseek</a>
+        <a target="_blank" rel="noopener" href="https://www.geogebra.org/materials" class="center-link">geogebra</a>
+        <a href="https://tools.pdf24.org/zh/" target="_blank" class="center-link">pdf24</a>
+      </div>
+    </div>
+    
+    <!-- 右侧：实时时间 -->
+    <div class="header-right">
+      <div class="time-display" id="timeDisplay">
+        <span class="date-part"></span>
+        <span class="time-part"></span>
+      </div>
+    </div>
+    
+  </div>
+</header>
+
+<!-- 内联样式 -->
+<style>
+/* 自定义顶部导航栏样式 */
+.custom-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 左侧菜单区域 */
+.header-left {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.menu-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.menu-icon {
+  font-size: 18px;
+}
+
+.menu-text {
+  font-weight: 500;
+}
+
+/* 下拉菜单 */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 10px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 10001;
+  padding: 8px 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+  background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+  color: #667eea;
+  border-left: 3px solid #667eea;
+  padding-left: 22px;
+}
+
+.menu-item .menu-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.menu-item .menu-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 中间链接区域 */
+.header-center {
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.center-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 25px;
+  padding: 8px 20px;
+  background: rgba(248, 249, 250, 0.8);
+  border-radius: 30px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.center-links::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.center-link {
+  color: #555;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 4px 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.center-link:hover {
+  color: #667eea;
+  transform: translateY(-1px);
+}
+
+.center-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #667eea;
+  transition: width 0.3s ease;
+}
+
+.center-link:hover::after {
+  width: 100%;
+}
+
+/* 右侧时间区域 */
+.header-right {
+  flex: 0 0 auto;
+}
+
+.time-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 15px;
+  background: rgba(248, 249, 250, 0.8);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 8px;
+  min-width: 140px;
+  text-align: center;
+}
+
+.date-part {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.time-part {
+  font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 10px;
+  }
+  
+  .menu-toggle .menu-text {
+    display: none;
+  }
+  
+  .center-links {
+    gap: 15px;
+    padding: 6px 12px;
+    max-width: 200px;
+  }
+  
+  .center-link {
+    font-size: 12px;
+  }
+  
+  .time-display {
+    min-width: 110px;
+    padding: 5px 10px;
+  }
+  
+  .date-part {
+    font-size: 11px;
+  }
+  
+  .time-part {
+    font-size: 12px;
+  }
+}
+
+/* 防止内容被header遮挡 */
+body {
+  padding-top: 70px !important;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px !important;
+  }
+}
+</style>
+
+<!-- 内联脚本 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  // ============ 菜单展开/关闭功能 ============
+  const menuToggle = document.getElementById('menuToggle');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  
+  if (menuToggle && dropdownMenu) {
+    // 点击菜单按钮
+    menuToggle.addEventListener('click', function(event) {
+      event.stopPropagation();
+      dropdownMenu.classList.toggle('show');
+    });
+    
+    // 点击页面其他地方关闭菜单
+    document.addEventListener('click', function() {
+      dropdownMenu.classList.remove('show');
+    });
+    
+    // 阻止菜单内部点击事件冒泡
+    dropdownMenu.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+    
+    // 点击菜单项后关闭菜单
+    const menuItems = dropdownMenu.querySelectorAll('.menu-item');
+    menuItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        dropdownMenu.classList.remove('show');
+      });
+    });
+  }
+  
+  // ============ 实时时间功能 ============
+  const datePart = document.querySelector('.date-part');
+  const timePart = document.querySelector('.time-part');
+
+  function updateTime() {
+    const now = new Date();
+    
+    // 获取UTC时间，然后加上8小时得到北京时间
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const beijingTime = new Date(utc + (3600000 * 8));
+    
+    // 获取日期：2025/12/1 格式
+    const year = beijingTime.getFullYear();
+    const month = beijingTime.getMonth() + 1;
+    const day = beijingTime.getDate();
+    const dateStr = `${year}/${month}/${day}`;
+    
+    // 获取时间：12:30:45 格式（精确到秒）
+    const hours = String(beijingTime.getHours()).padStart(2, '0');
+    const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
+    const seconds = String(beijingTime.getSeconds()).padStart(2, '0');
+    const timeStr = `${hours}:${minutes}:${seconds}`;
+    
+    // 更新显示
+    if (datePart) datePart.textContent = dateStr;
+    if (timePart) timePart.textContent = timeStr;
+  }
+
+  // 立即更新一次，然后每秒更新
+  if (datePart && timePart) {
+    updateTime();
+    setInterval(updateTime, 1000); // 每秒更新一次
+  }
+  
+  // ============ 滚动效果 ============
+  const header = document.querySelector('.custom-header');
+  
+  if (header) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 20) {
+        header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
+        header.style.backdropFilter = 'blur(15px)';
+      } else {
+        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        header.style.backdropFilter = 'blur(10px)';
+      }
+    });
+  }
+  
+});
+</script>
+  
+  <!-- 隐藏原来的导航栏 -->
+  <style>
+    .site-nav { display: none !important; }
+    .header { display: none !important; }
+  </style>
+
   <main class="main">
     <div class="column">
       <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
