@@ -67,473 +67,7 @@
 <script src="/kaorimiyazono518/js/third-party/math/mathjax.js" defer></script>
 
 
-<header class="custom-header">
-  <div class="header-container">
-    
-    <!-- 左侧：可展开的菜单按钮 -->
-    <div class="header-left">
-      <button class="menu-toggle" id="menuToggle">
-        <span class="menu-icon">☰</span>
-        <span class="menu-text">导航</span>
-      </button>
-      
-      <!-- 下拉菜单内容 -->
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a href="/kaorimiyazono518/" class="menu-item">
-          <span class="menu-icon">🏠</span>
-          <span class="menu-label">首页</span>
-        </a>
-        <a href="/kaorimiyazono518/about" class="menu-item">
-          <span class="menu-icon">👤</span>
-          <span class="menu-label">关于</span>
-        </a>
-        <a href="/kaorimiyazono518/tags" class="menu-item">
-          <span class="menu-icon">🏷️</span>
-          <span class="menu-label">标签</span>
-        </a>
-        <a href="/kaorimiyazono518/categories" class="menu-item">
-          <span class="menu-icon">📁</span>
-          <span class="menu-label">分类</span>
-        </a>
-        <a href="/kaorimiyazono518/archives" class="menu-item">
-          <span class="menu-icon">📅</span>
-          <span class="menu-label">归档</span>
-        </a>
-      </div>
-    </div>
-    
-    <!-- 中间：音乐播放器 -->
-    <div class="header-center">
-      <div class="music-player-compact">
-        <!-- 歌曲信息显示 -->
-        <div class="now-playing" id="nowPlaying">- 未播放 -</div>
-        <!-- 播放器控制按钮 -->
-        <div class="player-controls-compact">
-          <button class="ctrl-btn" id="prevBtn" title="上一首">⏮</button>
-          <button class="ctrl-btn" id="playPauseBtn" title="播放/暂停">▶️</button>
-          <button class="ctrl-btn" id="nextBtn" title="下一首">⏭</button>
-        </div>
-      </div>
-      <!-- 隐藏的音频元素 -->
-      <audio id="headerAudioPlayer" loop>
-        <!-- 音乐文件请放置在 source/music/ 目录下 -->
-        <source src="/music/song1.mp3" type="audio/mpeg">
-        <source src="/music/song2.mp3" type="audio/mpeg">
-        您的浏览器不支持音频播放。
-      </audio>
-    </div>
 
-    <!-- 右侧：实时时间 -->
-    <div class="header-right">
-      <div class="time-display" id="timeDisplay">
-        <span class="date-part"></span>
-        <span class="time-part"></span>
-      </div>
-    </div>
-    
-  </div>
-</header>
-
-<!-- 内联样式 -->
-<style>
-/* 自定义顶部导航栏样式 */
-.custom-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* 左侧菜单区域 */
-.header-left {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.menu-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.menu-icon {
-  font-size: 18px;
-}
-
-.menu-text {
-  font-weight: 500;
-}
-
-/* 下拉菜单 */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 10px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 10001;
-  padding: 8px 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border-left: 3px solid transparent;
-}
-
-.menu-item:hover {
-  background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
-  color: #667eea;
-  border-left: 3px solid #667eea;
-  padding-left: 22px;
-}
-
-.menu-item .menu-icon {
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
-}
-
-.menu-item .menu-label {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* 中间链接区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* 中间：紧凑型音乐播放器区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-  min-width: 0; /* 允许在空间不足时收缩 */
-}
-
-.music-player-compact {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  padding: 6px 20px;
-  background: rgba(248, 249, 250, 0.9);
-  border-radius: 30px;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  white-space: nowrap;
-  max-width: 90%;
-}
-
-.now-playing {
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px; /* 防止在窄屏下过长 */
-}
-
-.player-controls-compact {
-  display: flex;
-  gap: 8px;
-}
-
-.ctrl-btn {
-  background: transparent;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  color: #667eea;
-  padding: 4px 8px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  line-height: 1;
-}
-
-.ctrl-btn:hover {
-  background-color: rgba(102, 126, 234, 0.1);
-  transform: scale(1.1);
-}
-
-/* 右侧时间区域 */
-.header-right {
-  flex: 0 0 auto;
-}
-
-.time-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 15px;
-  background: rgba(248, 249, 250, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  min-width: 140px;
-  text-align: center;
-}
-
-.date-part {
-  font-size: 13px;
-  color: #666;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-
-.time-part {
-  font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
-  font-size: 14px;
-  color: #667eea;
-  font-weight: 600;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .header-container {
-    padding: 0 10px;
-  }
-  
-  .menu-toggle .menu-text {
-    display: none;
-  }
-  
-  .center-links {
-    gap: 15px;
-    padding: 6px 12px;
-    max-width: 200px;
-  }
-  
-  .center-link {
-    font-size: 12px;
-  }
-  
-  .time-display {
-    min-width: 110px;
-    padding: 5px 10px;
-  }
-  
-  .date-part {
-    font-size: 11px;
-  }
-  
-  .time-part {
-    font-size: 12px;
-  }
-}
-
-/* 防止内容被header遮挡 */
-body {
-  padding-top: 70px !important;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding-top: 60px !important;
-  }
-}
-</style>
-
-<!-- 内联脚本 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  
-  // ============ 菜单展开/关闭功能 ============
-  const menuToggle = document.getElementById('menuToggle');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  
-  if (menuToggle && dropdownMenu) {
-    // 点击菜单按钮
-    menuToggle.addEventListener('click', function(event) {
-      event.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
-    
-    // 点击页面其他地方关闭菜单
-    document.addEventListener('click', function() {
-      dropdownMenu.classList.remove('show');
-    });
-    
-    // 阻止菜单内部点击事件冒泡
-    dropdownMenu.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-    
-    // 点击菜单项后关闭菜单
-    const menuItems = dropdownMenu.querySelectorAll('.menu-item');
-    menuItems.forEach(function(item) {
-      item.addEventListener('click', function() {
-        dropdownMenu.classList.remove('show');
-      });
-    });
-  }
-  
-  // ============ 实时时间功能 ============
-  const datePart = document.querySelector('.date-part');
-  const timePart = document.querySelector('.time-part');
-
-  function updateTime() {
-    const now = new Date();
-    
-    // 获取UTC时间，然后加上8小时得到北京时间
-    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const beijingTime = new Date(utc + (3600000 * 8));
-    
-    // 获取日期：2025/12/1 格式
-    const year = beijingTime.getFullYear();
-    const month = beijingTime.getMonth() + 1;
-    const day = beijingTime.getDate();
-    const dateStr = `${year}/${month}/${day}`;
-    
-    // 获取时间：12:30:45 格式（精确到秒）
-    const hours = String(beijingTime.getHours()).padStart(2, '0');
-    const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
-    const seconds = String(beijingTime.getSeconds()).padStart(2, '0');
-    const timeStr = `${hours}:${minutes}:${seconds}`;
-    
-    // 更新显示
-    if (datePart) datePart.textContent = dateStr;
-    if (timePart) timePart.textContent = timeStr;
-  }
-
-  // 立即更新一次，然后每秒更新
-  if (datePart && timePart) {
-    updateTime();
-    setInterval(updateTime, 1000); // 每秒更新一次
-  }
-  
-  // ============ 滚动效果 ============
-  const header = document.querySelector('.custom-header');
-  
-  if (header) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 20) {
-        header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
-        header.style.backdropFilter = 'blur(15px)';
-      } else {
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        header.style.backdropFilter = 'blur(10px)';
-      }
-    });
-  }
-    // ============ 紧凑音乐播放器功能 ============
-  const audioPlayer = document.getElementById('headerAudioPlayer');
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const nowPlayingEl = document.getElementById('nowPlaying');
-
-  // 简单的播放列表（对应audio标签中的source）
-  const trackList = [
-    { title: '歌曲 1', src: '/music/song1.mp3' },
-    { title: '歌曲 2', src: '/music/song2.mp3' }
-    // 您可以在这里继续添加更多歌曲
-  ];
-  let currentTrackIndex = 0;
-
-  // 更新当前播放显示和按钮状态
-  function updatePlayerUI() {
-    nowPlayingEl.textContent = `♪ ${trackList[currentTrackIndex].title}`;
-    playPauseBtn.textContent = audioPlayer.paused ? '▶️' : '⏸️';
-  }
-
-  // 加载并播放指定索引的歌曲
-  function playTrack(index) {
-    if (index < 0 || index >= trackList.length) return;
-    currentTrackIndex = index;
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    audioPlayer.play()
-      .then(() => updatePlayerUI())
-      .catch(e => console.log('播放失败:', e));
-  }
-
-  // 事件监听
-  if (audioPlayer && playPauseBtn) {
-    // 播放/暂停
-    playPauseBtn.addEventListener('click', () => {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
-      updatePlayerUI();
-    });
-
-    // 上一首
-    prevBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex - 1;
-      if (newIndex < 0) newIndex = trackList.length - 1; // 循环到最后一首
-      playTrack(newIndex);
-    });
-
-    // 下一首
-    nextBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex + 1;
-      if (newIndex >= trackList.length) newIndex = 0; // 循环到第一首
-      playTrack(newIndex);
-    });
-
-    // 当一首歌结束时自动下一首
-    audioPlayer.addEventListener('ended', () => {
-      nextBtn.click(); // 触发下一首点击事件
-    });
-
-    // 初始化UI
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    updatePlayerUI();
-  }
-});
-</script>
   <noscript>
     <link rel="stylesheet" href="/kaorimiyazono518/css/noscript.css">
   </noscript>
@@ -541,481 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
-
-  <!-- 自定义顶部导航栏 -->
-  <header class="custom-header">
-  <div class="header-container">
-    
-    <!-- 左侧：可展开的菜单按钮 -->
-    <div class="header-left">
-      <button class="menu-toggle" id="menuToggle">
-        <span class="menu-icon">☰</span>
-        <span class="menu-text">导航</span>
-      </button>
-      
-      <!-- 下拉菜单内容 -->
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a href="/kaorimiyazono518/" class="menu-item">
-          <span class="menu-icon">🏠</span>
-          <span class="menu-label">首页</span>
-        </a>
-        <a href="/kaorimiyazono518/about" class="menu-item">
-          <span class="menu-icon">👤</span>
-          <span class="menu-label">关于</span>
-        </a>
-        <a href="/kaorimiyazono518/tags" class="menu-item">
-          <span class="menu-icon">🏷️</span>
-          <span class="menu-label">标签</span>
-        </a>
-        <a href="/kaorimiyazono518/categories" class="menu-item">
-          <span class="menu-icon">📁</span>
-          <span class="menu-label">分类</span>
-        </a>
-        <a href="/kaorimiyazono518/archives" class="menu-item">
-          <span class="menu-icon">📅</span>
-          <span class="menu-label">归档</span>
-        </a>
-      </div>
-    </div>
-    
-    <!-- 中间：音乐播放器 -->
-    <div class="header-center">
-      <div class="music-player-compact">
-        <!-- 歌曲信息显示 -->
-        <div class="now-playing" id="nowPlaying">- 未播放 -</div>
-        <!-- 播放器控制按钮 -->
-        <div class="player-controls-compact">
-          <button class="ctrl-btn" id="prevBtn" title="上一首">⏮</button>
-          <button class="ctrl-btn" id="playPauseBtn" title="播放/暂停">▶️</button>
-          <button class="ctrl-btn" id="nextBtn" title="下一首">⏭</button>
-        </div>
-      </div>
-      <!-- 隐藏的音频元素 -->
-      <audio id="headerAudioPlayer" loop>
-        <!-- 音乐文件请放置在 source/music/ 目录下 -->
-        <source src="/music/song1.mp3" type="audio/mpeg">
-        <source src="/music/song2.mp3" type="audio/mpeg">
-        您的浏览器不支持音频播放。
-      </audio>
-    </div>
-
-    <!-- 右侧：实时时间 -->
-    <div class="header-right">
-      <div class="time-display" id="timeDisplay">
-        <span class="date-part"></span>
-        <span class="time-part"></span>
-      </div>
-    </div>
-    
-  </div>
-</header>
-
-<!-- 内联样式 -->
-<style>
-/* 自定义顶部导航栏样式 */
-.custom-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* 左侧菜单区域 */
-.header-left {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.menu-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.menu-icon {
-  font-size: 18px;
-}
-
-.menu-text {
-  font-weight: 500;
-}
-
-/* 下拉菜单 */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 10px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 10001;
-  padding: 8px 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border-left: 3px solid transparent;
-}
-
-.menu-item:hover {
-  background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
-  color: #667eea;
-  border-left: 3px solid #667eea;
-  padding-left: 22px;
-}
-
-.menu-item .menu-icon {
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
-}
-
-.menu-item .menu-label {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* 中间链接区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* 中间：紧凑型音乐播放器区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-  min-width: 0; /* 允许在空间不足时收缩 */
-}
-
-.music-player-compact {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  padding: 6px 20px;
-  background: rgba(248, 249, 250, 0.9);
-  border-radius: 30px;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  white-space: nowrap;
-  max-width: 90%;
-}
-
-.now-playing {
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px; /* 防止在窄屏下过长 */
-}
-
-.player-controls-compact {
-  display: flex;
-  gap: 8px;
-}
-
-.ctrl-btn {
-  background: transparent;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  color: #667eea;
-  padding: 4px 8px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  line-height: 1;
-}
-
-.ctrl-btn:hover {
-  background-color: rgba(102, 126, 234, 0.1);
-  transform: scale(1.1);
-}
-
-/* 右侧时间区域 */
-.header-right {
-  flex: 0 0 auto;
-}
-
-.time-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 15px;
-  background: rgba(248, 249, 250, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  min-width: 140px;
-  text-align: center;
-}
-
-.date-part {
-  font-size: 13px;
-  color: #666;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-
-.time-part {
-  font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
-  font-size: 14px;
-  color: #667eea;
-  font-weight: 600;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .header-container {
-    padding: 0 10px;
-  }
-  
-  .menu-toggle .menu-text {
-    display: none;
-  }
-  
-  .center-links {
-    gap: 15px;
-    padding: 6px 12px;
-    max-width: 200px;
-  }
-  
-  .center-link {
-    font-size: 12px;
-  }
-  
-  .time-display {
-    min-width: 110px;
-    padding: 5px 10px;
-  }
-  
-  .date-part {
-    font-size: 11px;
-  }
-  
-  .time-part {
-    font-size: 12px;
-  }
-}
-
-/* 防止内容被header遮挡 */
-body {
-  padding-top: 70px !important;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding-top: 60px !important;
-  }
-}
-</style>
-
-<!-- 内联脚本 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  
-  // ============ 菜单展开/关闭功能 ============
-  const menuToggle = document.getElementById('menuToggle');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  
-  if (menuToggle && dropdownMenu) {
-    // 点击菜单按钮
-    menuToggle.addEventListener('click', function(event) {
-      event.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
-    
-    // 点击页面其他地方关闭菜单
-    document.addEventListener('click', function() {
-      dropdownMenu.classList.remove('show');
-    });
-    
-    // 阻止菜单内部点击事件冒泡
-    dropdownMenu.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-    
-    // 点击菜单项后关闭菜单
-    const menuItems = dropdownMenu.querySelectorAll('.menu-item');
-    menuItems.forEach(function(item) {
-      item.addEventListener('click', function() {
-        dropdownMenu.classList.remove('show');
-      });
-    });
-  }
-  
-  // ============ 实时时间功能 ============
-  const datePart = document.querySelector('.date-part');
-  const timePart = document.querySelector('.time-part');
-
-  function updateTime() {
-    const now = new Date();
-    
-    // 获取UTC时间，然后加上8小时得到北京时间
-    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const beijingTime = new Date(utc + (3600000 * 8));
-    
-    // 获取日期：2025/12/1 格式
-    const year = beijingTime.getFullYear();
-    const month = beijingTime.getMonth() + 1;
-    const day = beijingTime.getDate();
-    const dateStr = `${year}/${month}/${day}`;
-    
-    // 获取时间：12:30:45 格式（精确到秒）
-    const hours = String(beijingTime.getHours()).padStart(2, '0');
-    const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
-    const seconds = String(beijingTime.getSeconds()).padStart(2, '0');
-    const timeStr = `${hours}:${minutes}:${seconds}`;
-    
-    // 更新显示
-    if (datePart) datePart.textContent = dateStr;
-    if (timePart) timePart.textContent = timeStr;
-  }
-
-  // 立即更新一次，然后每秒更新
-  if (datePart && timePart) {
-    updateTime();
-    setInterval(updateTime, 1000); // 每秒更新一次
-  }
-  
-  // ============ 滚动效果 ============
-  const header = document.querySelector('.custom-header');
-  
-  if (header) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 20) {
-        header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
-        header.style.backdropFilter = 'blur(15px)';
-      } else {
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        header.style.backdropFilter = 'blur(10px)';
-      }
-    });
-  }
-    // ============ 紧凑音乐播放器功能 ============
-  const audioPlayer = document.getElementById('headerAudioPlayer');
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const nowPlayingEl = document.getElementById('nowPlaying');
-
-  // 简单的播放列表（对应audio标签中的source）
-  const trackList = [
-    { title: '歌曲 1', src: '/music/song1.mp3' },
-    { title: '歌曲 2', src: '/music/song2.mp3' }
-    // 您可以在这里继续添加更多歌曲
-  ];
-  let currentTrackIndex = 0;
-
-  // 更新当前播放显示和按钮状态
-  function updatePlayerUI() {
-    nowPlayingEl.textContent = `♪ ${trackList[currentTrackIndex].title}`;
-    playPauseBtn.textContent = audioPlayer.paused ? '▶️' : '⏸️';
-  }
-
-  // 加载并播放指定索引的歌曲
-  function playTrack(index) {
-    if (index < 0 || index >= trackList.length) return;
-    currentTrackIndex = index;
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    audioPlayer.play()
-      .then(() => updatePlayerUI())
-      .catch(e => console.log('播放失败:', e));
-  }
-
-  // 事件监听
-  if (audioPlayer && playPauseBtn) {
-    // 播放/暂停
-    playPauseBtn.addEventListener('click', () => {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
-      updatePlayerUI();
-    });
-
-    // 上一首
-    prevBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex - 1;
-      if (newIndex < 0) newIndex = trackList.length - 1; // 循环到最后一首
-      playTrack(newIndex);
-    });
-
-    // 下一首
-    nextBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex + 1;
-      if (newIndex >= trackList.length) newIndex = 0; // 循环到第一首
-      playTrack(newIndex);
-    });
-
-    // 当一首歌结束时自动下一首
-    audioPlayer.addEventListener('ended', () => {
-      nextBtn.click(); // 触发下一首点击事件
-    });
-
-    // 初始化UI
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    updatePlayerUI();
-  }
-});
-</script>
-  
-  <!-- 隐藏原来的导航栏 -->
-  <style>
-    .site-nav { display: none !important; }
-    .header { display: none !important; }
-  </style>
 
   <main class="main">
     <div class="column">
@@ -1050,138 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
   </ul>
 </nav>
 
-
-
-
-</header>
-        
-  
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">kaorimiyazono</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/kaorimiyazono518/archives/">
-          <span class="site-state-item-count">10</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/kaorimiyazono518/categories/">
-        <span class="site-state-item-count">10</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/kaorimiyazono518/tags/">
-        <span class="site-state-item-count">5</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-
-        </div>
-      </div>
-    </div>
-
-    
-  </aside>
-
-
-    </div>
-
-    <div class="main-inner index posts-expand">
-
-
-  
-  
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/kaorimiyazono518/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/kaorimiyazono518/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/kaorimiyazono518/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/kaorimiyazono518/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/kaorimiyazono518/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"kaorimiyazono518.github.io","root":"/kaorimiyazono518/","images":"/kaorimiyazono518/images","scheme":"Muse","darkmode":true,"version":"8.26.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/kaorimiyazono518/js/config.js" defer></script>
-
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Kaorimiyazono">
-<meta property="og:url" content="https://kaorimiyazono518.github.io/index.html">
-<meta property="og:site_name" content="Kaorimiyazono">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="kaorimiyazono">
-<meta name="twitter:card" content="summary">
-
-
-<link rel="canonical" href="https://kaorimiyazono518.github.io/">
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title></title>
-  
-
-
-
-
-
-
-
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-<script src="/kaorimiyazono518/js/utils.js" defer></script><script src="/kaorimiyazono518/js/motion.js" defer></script><script src="/kaorimiyazono518/js/sidebar.js" defer></script><script src="/kaorimiyazono518/js/next-boot.js" defer></script>
-
-  
-
-
-
-
-
-
-  
-
-
-
-
-  
-
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
-<script src="/kaorimiyazono518/js/third-party/math/mathjax.js" defer></script>
 
 
 <header class="custom-header">
@@ -1236,8 +163,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- 音乐文件请放置在 source/music/ 目录下 -->
         <source src="/music/song1.mp3" type="audio/mpeg">
         <source src="/music/song2.mp3" type="audio/mpeg">
+        <source src="/music/song3.mp3" type="audio/mpeg">
+        <source src="/music/song4.mp3" type="audio/mpeg">
+        <source src="/music/song5.mp3" type="audio/mpeg">
         您的浏览器不支持音频播放。
-      </audio>
+       </audio>
     </div>
 
     <!-- 右侧：实时时间 -->
@@ -1499,481 +429,11 @@ body {
     padding-top: 60px !important;
   }
 }
-</style>
 
-<!-- 内联脚本 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  
-  // ============ 菜单展开/关闭功能 ============
-  const menuToggle = document.getElementById('menuToggle');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  
-  if (menuToggle && dropdownMenu) {
-    // 点击菜单按钮
-    menuToggle.addEventListener('click', function(event) {
-      event.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
-    
-    // 点击页面其他地方关闭菜单
-    document.addEventListener('click', function() {
-      dropdownMenu.classList.remove('show');
-    });
-    
-    // 阻止菜单内部点击事件冒泡
-    dropdownMenu.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-    
-    // 点击菜单项后关闭菜单
-    const menuItems = dropdownMenu.querySelectorAll('.menu-item');
-    menuItems.forEach(function(item) {
-      item.addEventListener('click', function() {
-        dropdownMenu.classList.remove('show');
-      });
-    });
-  }
-  
-  // ============ 实时时间功能 ============
-  const datePart = document.querySelector('.date-part');
-  const timePart = document.querySelector('.time-part');
-
-  function updateTime() {
-    const now = new Date();
-    
-    // 获取UTC时间，然后加上8小时得到北京时间
-    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const beijingTime = new Date(utc + (3600000 * 8));
-    
-    // 获取日期：2025/12/1 格式
-    const year = beijingTime.getFullYear();
-    const month = beijingTime.getMonth() + 1;
-    const day = beijingTime.getDate();
-    const dateStr = `${year}/${month}/${day}`;
-    
-    // 获取时间：12:30:45 格式（精确到秒）
-    const hours = String(beijingTime.getHours()).padStart(2, '0');
-    const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
-    const seconds = String(beijingTime.getSeconds()).padStart(2, '0');
-    const timeStr = `${hours}:${minutes}:${seconds}`;
-    
-    // 更新显示
-    if (datePart) datePart.textContent = dateStr;
-    if (timePart) timePart.textContent = timeStr;
-  }
-
-  // 立即更新一次，然后每秒更新
-  if (datePart && timePart) {
-    updateTime();
-    setInterval(updateTime, 1000); // 每秒更新一次
-  }
-  
-  // ============ 滚动效果 ============
-  const header = document.querySelector('.custom-header');
-  
-  if (header) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 20) {
-        header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
-        header.style.backdropFilter = 'blur(15px)';
-      } else {
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        header.style.backdropFilter = 'blur(10px)';
-      }
-    });
-  }
-    // ============ 紧凑音乐播放器功能 ============
-  const audioPlayer = document.getElementById('headerAudioPlayer');
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const nowPlayingEl = document.getElementById('nowPlaying');
-
-  // 简单的播放列表（对应audio标签中的source）
-  const trackList = [
-    { title: '歌曲 1', src: '/music/song1.mp3' },
-    { title: '歌曲 2', src: '/music/song2.mp3' }
-    // 您可以在这里继续添加更多歌曲
-  ];
-  let currentTrackIndex = 0;
-
-  // 更新当前播放显示和按钮状态
-  function updatePlayerUI() {
-    nowPlayingEl.textContent = `♪ ${trackList[currentTrackIndex].title}`;
-    playPauseBtn.textContent = audioPlayer.paused ? '▶️' : '⏸️';
-  }
-
-  // 加载并播放指定索引的歌曲
-  function playTrack(index) {
-    if (index < 0 || index >= trackList.length) return;
-    currentTrackIndex = index;
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    audioPlayer.play()
-      .then(() => updatePlayerUI())
-      .catch(e => console.log('播放失败:', e));
-  }
-
-  // 事件监听
-  if (audioPlayer && playPauseBtn) {
-    // 播放/暂停
-    playPauseBtn.addEventListener('click', () => {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
-      updatePlayerUI();
-    });
-
-    // 上一首
-    prevBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex - 1;
-      if (newIndex < 0) newIndex = trackList.length - 1; // 循环到最后一首
-      playTrack(newIndex);
-    });
-
-    // 下一首
-    nextBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex + 1;
-      if (newIndex >= trackList.length) newIndex = 0; // 循环到第一首
-      playTrack(newIndex);
-    });
-
-    // 当一首歌结束时自动下一首
-    audioPlayer.addEventListener('ended', () => {
-      nextBtn.click(); // 触发下一首点击事件
-    });
-
-    // 初始化UI
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    updatePlayerUI();
-  }
-});
-</script>
-  <noscript>
-    <link rel="stylesheet" href="/kaorimiyazono518/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <!-- 自定义顶部导航栏 -->
-  <header class="custom-header">
-  <div class="header-container">
-    
-    <!-- 左侧：可展开的菜单按钮 -->
-    <div class="header-left">
-      <button class="menu-toggle" id="menuToggle">
-        <span class="menu-icon">☰</span>
-        <span class="menu-text">导航</span>
-      </button>
-      
-      <!-- 下拉菜单内容 -->
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a href="/kaorimiyazono518/" class="menu-item">
-          <span class="menu-icon">🏠</span>
-          <span class="menu-label">首页</span>
-        </a>
-        <a href="/kaorimiyazono518/about" class="menu-item">
-          <span class="menu-icon">👤</span>
-          <span class="menu-label">关于</span>
-        </a>
-        <a href="/kaorimiyazono518/tags" class="menu-item">
-          <span class="menu-icon">🏷️</span>
-          <span class="menu-label">标签</span>
-        </a>
-        <a href="/kaorimiyazono518/categories" class="menu-item">
-          <span class="menu-icon">📁</span>
-          <span class="menu-label">分类</span>
-        </a>
-        <a href="/kaorimiyazono518/archives" class="menu-item">
-          <span class="menu-icon">📅</span>
-          <span class="menu-label">归档</span>
-        </a>
-      </div>
-    </div>
-    
-    <!-- 中间：音乐播放器 -->
-    <div class="header-center">
-      <div class="music-player-compact">
-        <!-- 歌曲信息显示 -->
-        <div class="now-playing" id="nowPlaying">- 未播放 -</div>
-        <!-- 播放器控制按钮 -->
-        <div class="player-controls-compact">
-          <button class="ctrl-btn" id="prevBtn" title="上一首">⏮</button>
-          <button class="ctrl-btn" id="playPauseBtn" title="播放/暂停">▶️</button>
-          <button class="ctrl-btn" id="nextBtn" title="下一首">⏭</button>
-        </div>
-      </div>
-      <!-- 隐藏的音频元素 -->
-      <audio id="headerAudioPlayer" loop>
-        <!-- 音乐文件请放置在 source/music/ 目录下 -->
-        <source src="/music/song1.mp3" type="audio/mpeg">
-        <source src="/music/song2.mp3" type="audio/mpeg">
-        您的浏览器不支持音频播放。
-      </audio>
-    </div>
-
-    <!-- 右侧：实时时间 -->
-    <div class="header-right">
-      <div class="time-display" id="timeDisplay">
-        <span class="date-part"></span>
-        <span class="time-part"></span>
-      </div>
-    </div>
-    
-  </div>
-</header>
-
-<!-- 内联样式 -->
-<style>
-/* 自定义顶部导航栏样式 */
-.custom-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+/* 隐藏原来的导航栏 */
+.site-nav {
+  display: none !important;
 }
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* 左侧菜单区域 */
-.header-left {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.menu-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.menu-icon {
-  font-size: 18px;
-}
-
-.menu-text {
-  font-weight: 500;
-}
-
-/* 下拉菜单 */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 10px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 10001;
-  padding: 8px 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border-left: 3px solid transparent;
-}
-
-.menu-item:hover {
-  background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
-  color: #667eea;
-  border-left: 3px solid #667eea;
-  padding-left: 22px;
-}
-
-.menu-item .menu-icon {
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
-}
-
-.menu-item .menu-label {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* 中间链接区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* 中间：紧凑型音乐播放器区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-  min-width: 0; /* 允许在空间不足时收缩 */
-}
-
-.music-player-compact {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  padding: 6px 20px;
-  background: rgba(248, 249, 250, 0.9);
-  border-radius: 30px;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  white-space: nowrap;
-  max-width: 90%;
-}
-
-.now-playing {
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px; /* 防止在窄屏下过长 */
-}
-
-.player-controls-compact {
-  display: flex;
-  gap: 8px;
-}
-
-.ctrl-btn {
-  background: transparent;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  color: #667eea;
-  padding: 4px 8px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  line-height: 1;
-}
-
-.ctrl-btn:hover {
-  background-color: rgba(102, 126, 234, 0.1);
-  transform: scale(1.1);
-}
-
-/* 右侧时间区域 */
-.header-right {
-  flex: 0 0 auto;
-}
-
-.time-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 15px;
-  background: rgba(248, 249, 250, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  min-width: 140px;
-  text-align: center;
-}
-
-.date-part {
-  font-size: 13px;
-  color: #666;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-
-.time-part {
-  font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
-  font-size: 14px;
-  color: #667eea;
-  font-weight: 600;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .header-container {
-    padding: 0 10px;
-  }
-  
-  .menu-toggle .menu-text {
-    display: none;
-  }
-  
-  .center-links {
-    gap: 15px;
-    padding: 6px 12px;
-    max-width: 200px;
-  }
-  
-  .center-link {
-    font-size: 12px;
-  }
-  
-  .time-display {
-    min-width: 110px;
-    padding: 5px 10px;
-  }
-  
-  .date-part {
-    font-size: 11px;
-  }
-  
-  .time-part {
-    font-size: 12px;
-  }
-}
-
-/* 防止内容被header遮挡 */
-body {
-  padding-top: 70px !important;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding-top: 60px !important;
-  }
 }
 </style>
 
@@ -2069,8 +529,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // 简单的播放列表（对应audio标签中的source）
   const trackList = [
     { title: '歌曲 1', src: '/music/song1.mp3' },
-    { title: '歌曲 2', src: '/music/song2.mp3' }
-    // 您可以在这里继续添加更多歌曲
+    { title: '歌曲 2', src: '/music/song2.mp3' },
+    { title: '歌曲 3', src: '/music/song3.mp3' },
+    { title: '歌曲 4', src: '/music/song4.mp3' },
+    { title: '歌曲 5', src: '/music/song5.mp3' }
   ];
   let currentTrackIndex = 0;
 
@@ -2085,8 +547,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (index < 0 || index >= trackList.length) return;
     currentTrackIndex = index;
     audioPlayer.src = trackList[currentTrackIndex].src;
+    // 立即更新UI
+    updatePlayerUI();
     audioPlayer.play()
-      .then(() => updatePlayerUI())
       .catch(e => console.log('播放失败:', e));
   }
 
@@ -2127,57 +590,25 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-  
-  <!-- 隐藏原来的导航栏 -->
-  <style>
-    .site-nav { display: none !important; }
-    .header { display: none !important; }
-  </style>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/kaorimiyazono518/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Kaorimiyazono</h1>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/kaorimiyazono518/custom-home/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/kaorimiyazono518/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/kaorimiyazono518/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/kaorimiyazono518/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/kaorimiyazono518/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
-  </ul>
-</nav>
-
-
-
-
 </header>
         
   
+    
+      
+
+    
+  
 
     </div>
 
-    <div class="main-inner ">
+    <div class="main-inner 
+  
+    custom-homepage
+  
+">
 
+  
+    
 <!-- 背景图片容器 -->
 <div class="home-background-wrapper">
   <div class="custom-homepage">
@@ -2196,11 +627,11 @@ document.addEventListener('DOMContentLoaded', function() {
           <!-- 个人数据/状态 -->
           <div class="personal-stats">
             <div class="stat-item">
-              <div class="stat-number" id="postCount">--</div>
+              <div class="stat-number" id="postCount">10</div>
               <div class="stat-label">文章</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number" id="tagCount">--</div>
+              <div class="stat-number" id="tagCount">5</div>
               <div class="stat-label">标签</div>
             </div>
             <div class="stat-item">
@@ -2268,1348 +699,297 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </div>
 
-</div>
-  </main>
 
-  <footer class="footer">
-    <div class="footer-inner">
-
-  <div class="copyright">
-    &copy; 
-    <span itemprop="copyrightYear">2025</span>
-    <span class="with-love">
-      <i class="fa fa-heart"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">kaorimiyazono</span>
-  </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-    </div>
-  </footer>
 
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up fa-lg"></i>
-    <span>0%</span>
-  </div>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
-</body>
-</html>
+
+<style>
+/* 1. 背景图片设置 */
+.home-background-wrapper {
+  background-image: url('/images/home-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
+.home-background-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.custom-homepage {
+  position: relative;
+  z-index: 1;
+  color: #f0f0f0;
+  padding-bottom: 60px;
+}
+
+/* 2. 顶部个人介绍区域 */
+.intro-section {
+  padding: 80px 20px 60px;
+}
+
+.intro-container {
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.intro-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 50px 60px;
+  max-width: 900px;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.intro-title {
+  font-size: 3.2em;
+  margin-bottom: 15px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.intro-title .highlight {
+  color: #6aeeff;
+  font-weight: 800;
+}
+
+.intro-subtitle {
+  font-size: 1.4em;
+  color: #ccc;
+  margin-bottom: 40px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.intro-content {
+  font-size: 1.2em;
+  line-height: 1.9;
+  color: #e0e0e0;
+  margin-bottom: 50px;
+  text-align: left;
+}
+
+.intro-content h2,
+.intro-content h3 {
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 10px;
+}
+
+/* 个人数据统计 */
+.personal-stats {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  padding-top: 30px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number,
+.stat-days {
+  font-size: 2.8em;
+  font-weight: 800;
+  color: #000;
+  font-family: 'Courier New', monospace;
+}
+
+.stat-label {
+  font-size: 1em;
+  color: #333;
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 3. 中部链接卡片区域 */
+.links-section {
+  padding: 60px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 50px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.link-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 18px;
+  padding: 35px 25px;
+  text-decoration: none;
+  color: #f0f0f0;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: block;
+}
+
+.link-card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-12px) scale(1.03);
+  border-color: rgba(106, 238, 255, 0.6);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+.link-icon {
+  font-size: 2.8em;
+  margin-bottom: 25px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-card h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.5em;
+  color: #fff;
+}
+
+.link-card p {
+  margin: 0;
+  color: #ccc;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+/* 4. 响应式设计 */
+@media (max-width: 992px) {
+  .intro-card {
+    padding: 40px 30px;
+  }
+  
+  .intro-title {
+    font-size: 2.6em;
+  }
+  
+  .links-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-background-wrapper {
+    background-attachment: scroll;
+  }
+  
+  .intro-section {
+    padding: 60px 20px 40px;
+  }
+  
+  .intro-title {
+    font-size: 2.2em;
+  }
+  
+  .intro-subtitle {
+    font-size: 1.2em;
+  }
+  
+  .personal-stats {
+    gap: 30px;
+  }
+  
+  .stat-number,
+  .stat-days {
+    font-size: 2.2em;
+  }
+  
+  .section-title {
+    font-size: 2em;
+  }
+  
+  .links-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-card {
+    padding: 30px 20px;
+  }
+  
+  .intro-title {
+    font-size: 1.8em;
+  }
+  
+  .personal-stats {
+    flex-direction: column;
+    gap: 25px;
+  }
+}
+</style>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. 动态计算并显示运行天数
+  const siteDaysEl = document.getElementById('siteDays');
+
+  // 计算运行天数（从2025年10月1日开始）
+  if (siteDaysEl) {
+    const siteStartDate = new Date('2025-10-01');
+    const today = new Date();
+    const diffTime = Math.abs(today - siteStartDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    siteDaysEl.textContent = diffDays;
+  }
+
+  // 2. 链接卡片的点击反馈
+  const linkCards = document.querySelectorAll('.link-card');
+  linkCards.forEach(card => {
+    card.addEventListener('click', function(e) {
+      console.log('导航到:', this.href);
+    });
+  });
+});
+</script>
 
   
-  
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/12/01/%E5%A4%A7%E5%AD%A6%E5%AD%A6%E4%B9%A0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%96%87%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/12/01/%E5%A4%A7%E5%AD%A6%E5%AD%A6%E4%B9%A0/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E6%96%87%E6%B3%95/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-12-01 19:37:27" itemprop="dateCreated datePublished" datetime="2025-12-01T19:37:27+08:00">2025-12-01</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/12/01/%E7%AC%94%E8%AE%B0/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/12/01/%E7%AC%94%E8%AE%B0/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">高等数学笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-12-01 12:07:21 / Modified: 12:30:26" itemprop="dateCreated datePublished" datetime="2025-12-01T12:07:21+08:00">2025-12-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E7%AC%94%E8%AE%B0/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">高等数学</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p1.jpg" alt="图1"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p2.jpg" alt="图2"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p3.jpg" alt="图3"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p4.jpg" alt="图4"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p5.jpg" alt="图5"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p6.jpg" alt="图6"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p7.jpg" alt="图7"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p8.jpg" alt="图8"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p9.jpg" alt="图9"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p10.jpg" alt="图10"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p11.jpg" alt="图11"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p12.jpg" alt="图12"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p13.jpg" alt="图13"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p14.jpg" alt="图14"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p15.jpg" alt="图15"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p16.jpg" alt="图16"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p17.jpg" alt="图17"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p18.jpg" alt="图18"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p19.jpg" alt="图19"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p20.jpg" alt="图20"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p21.jpg" alt="图21"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p22.jpg" alt="图22"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p23.jpg" alt="图23"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p24.jpg" alt="图24"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p25.jpg" alt="图25"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p26.jpg" alt="图26"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p27.jpg" alt="图27"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p28.jpg" alt="图28"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p29.jpg" alt="图29"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p30.jpg" alt="图30"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p31.jpg" alt="图31"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p32.jpg" alt="图32"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p33.jpg" alt="图33"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p34.jpg" alt="图34"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p35.jpg" alt="图35"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p36.jpg" alt="图36"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p37.jpg" alt="图37"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p38.jpg" alt="图38"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p39.jpg" alt="图39"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p40.jpg" alt="图40"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p41.jpg" alt="图41"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p42.jpg" alt="图42"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p43.jpg" alt="图43"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p44.jpg" alt="图44"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p45.jpg" alt="图45"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p46.jpg" alt="图46"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p47.jpg" alt="图47"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p48.jpg" alt="图48"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p49.jpg" alt="图49"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p50.jpg" alt="图50"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p51.jpg" alt="图51"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p52.jpg" alt="图52"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p53.jpg" alt="图53"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p54.jpg" alt="图54"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p55.jpg" alt="图55"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p56.jpg" alt="图56"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p57.jpg" alt="图57"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p58.jpg" alt="图58"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p59.jpg" alt="图59"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p60.jpg" alt="图60"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p61.jpg" alt="图61"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p62.jpg" alt="图62"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p63.jpg" alt="图63"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p64.jpg" alt="图64"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p65.jpg" alt="图65"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p66.jpg" alt="图66"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p67.jpg" alt="图67"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p68.jpg" alt="图68"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p69.jpg" alt="图69"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p70.jpg" alt="图70"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p71.jpg" alt="图71"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p72.jpg" alt="图72"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p73.jpg" alt="图73"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p74.jpg" alt="图74"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p75.jpg" alt="图75"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p76.jpg" alt="图76"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p77.jpg" alt="图77"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p78.jpg" alt="图78"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p79.jpg" alt="图79"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p80.jpg" alt="图80"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p81.jpg" alt="图81"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p82.jpg" alt="图82"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p83.jpg" alt="图83"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p84.jpg" alt="图84"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p85.jpg" alt="图85"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p86.jpg" alt="图86"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p87.jpg" alt="图87"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p88.jpg" alt="图88"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p89.jpg" alt="图89"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p90.jpg" alt="图90"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p91.jpg" alt="图91"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p92.jpg" alt="图92"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p93.jpg" alt="图93"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p94.jpg" alt="图94"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p95.jpg" alt="图95"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p96.jpg" alt="图96"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p97.jpg" alt="图97"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p98.jpg" alt="图98"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p99.jpg" alt="图99"><br><img src="/kaorimiyazono518/images/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AC%94%E8%AE%B0/p100.jpg" alt="图100"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.2%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E4%B8%8E%E4%B8%80%E8%88%AC%E5%B9%B3%E9%9D%A2%E6%9B%B2%E7%BA%BF%E8%BF%90%E5%8A%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.2%E5%9C%86%E5%91%A8%E8%BF%90%E5%8A%A8%E4%B8%8E%E4%B8%80%E8%88%AC%E5%B9%B3%E9%9D%A2%E6%9B%B2%E7%BA%BF%E8%BF%90%E5%8A%A8/" class="post-title-link" itemprop="url">1.2圆周运动与一般平面曲线运动</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-11-29 15:16:50 / Modified: 19:30:04" itemprop="dateCreated datePublished" datetime="2025-11-29T15:16:50+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">专业课</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">大学物理</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E5%8A%9B%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">力学</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="圆周运动"><a href="#圆周运动" class="headerlink" title="圆周运动"></a>圆周运动</h1><p><strong>圆周运动分为匀速圆周运动和变速圆周运动</strong></p>
-<p>$w&#x3D;\frac{d\theta}{dt} $ </p>
-<p>$\alpha&#x3D;\frac{dw}{dt}$</p>
-<p>对于加速度$\vec{a}$ ，我们将其拆解为切向加速度 $\vec{a_\tau}$  和法向加速度 $\vec{a_n}$</p>
-<p>$\vec{a}&#x3D;\frac{d(v\vec{\tau})}{dt}&#x3D;\frac{dv​}{dt}\vec{\tau}+v\frac{d\vec{\tau}}{dt}​$</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.1%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/11/29/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E5%AD%A6/1.1%E8%B4%A8%E7%82%B9%E8%BF%90%E5%8A%A8%E6%8F%8F%E8%BF%B0/" class="post-title-link" itemprop="url">1.1 质点运动描述</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-11-29 15:16:50 / Modified: 19:29:55" itemprop="dateCreated datePublished" datetime="2025-11-29T15:16:50+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/" itemprop="url" rel="index"><span itemprop="name">专业课</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">大学物理</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E4%B8%93%E4%B8%9A%E8%AF%BE/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86/%E5%8A%9B%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">力学</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li><p>经典力学概述</p>
-</li>
-<li><p>质点的概念</p>
-</li>
-<li><p>确定质点位置的方法</p>
-</li>
-<li><p>运动方程</p>
-</li>
-<li><p>位移</p>
-</li>
-<li><p>速度</p>
-</li>
-<li><p>加速度</p>
-</li>
-<li><p>直角坐标系下的表示</p>
-</li>
-<li><p>极坐标系中的径向速度</p>
-</li>
-<li><p>质点运动学的基本问题</p>
-</li>
-<li><p>例题解析</p>
-</li>
-<li><p>思考题解答</p>
-</li>
-</ul>
-<h2 id="经典力学概述"><a href="#经典力学概述" class="headerlink" title="经典力学概述"></a>经典力学概述</h2><h3 id="运动学与动力学"><a href="#运动学与动力学" class="headerlink" title="运动学与动力学"></a>运动学与动力学</h3><ul>
-<li><p><strong>运动学</strong>：从几何观点来研究和描述物体机械运动规律，研究”怎样动”的问题</p>
-</li>
-<li><p><strong>动力学</strong>：从受力的角度来研究和描述物体机械运动规律，研究”为什么动”的问题</p>
-</li>
-<li><p><strong>运动状态</strong>：用位置、速度、加速度等物理量来描述在某一时刻物体状态的</p>
-</li>
-<li><p><strong>运动学的核心</strong>：运动方程</p>
-</li>
-</ul>
-<h3 id="经典力学主要内容"><a href="#经典力学主要内容" class="headerlink" title="经典力学主要内容"></a>经典力学主要内容</h3><ul>
-<li><p>质点运动的描述</p>
-</li>
-<li><p>圆周运动与一般曲线运动</p>
-</li>
-<li><p>相对运动</p>
-</li>
-<li><p>牛顿定律</p>
-</li>
-<li><p>动量守恒和能量守恒定律</p>
-</li>
-<li><p>刚体的转动</p>
-</li>
-</ul>
-<h2 id="质点的概念"><a href="#质点的概念" class="headerlink" title="质点的概念"></a>质点的概念</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><ul>
-<li><p><strong>质点</strong>：只具有质量而没有大小和形状的”理想物体”</p>
-</li>
-<li><p><strong>理想模型</strong>：一种科学思维方法</p>
-<ul>
-<li><p>根据所研究问题的性质，突出主要因素，忽略次要因素</p>
-</li>
-<li><p>使问题简化但又不失客观真实性的一种抽象思维方法</p>
-</li>
-<li><p>例子：质点、刚体、线性弹簧振子、理想气体、点电荷及光滑平面、细绳、无阻尼振动、绝热过程等</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="确定质点位置的方法"><a href="#确定质点位置的方法" class="headerlink" title="确定质点位置的方法"></a>确定质点位置的方法</h2><h3 id="参考系"><a href="#参考系" class="headerlink" title="参考系"></a>参考系</h3><p>描述物体运动时被选作参考的其他物体或物体系，称为”参考系”或”参照系”</p>
-<h3 id="位置确定方法"><a href="#位置确定方法" class="headerlink" title="位置确定方法"></a>位置确定方法</h3><ol>
-<li><p><strong>坐标法</strong>：选定三维坐标系，用坐标值 $(x, y, z)$ 来表示空间一质点的位置</p>
-</li>
-<li><p><strong>位矢法</strong>：选一固定点0，由0点向质点P引一矢量 $\vec{r}$（位置矢量，位矢）</p>
-</li>
-<li><p><strong>自然法</strong>：在已知运动轨迹上任选一固定点0，规定一正方向，曲线长度 $s$ 称自然坐标</p>
-</li>
-</ol>
-<h2 id="运动方程"><a href="#运动方程" class="headerlink" title="运动方程"></a>运动方程</h2><h3 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h3><p>用以确定在选定的参考系中质点相对坐标系的位置随时间变化的数学表达式：</p>
-<p><strong>坐标形式</strong>：<br>$x &#x3D; x(t), y &#x3D; y(t), z &#x3D; z(t)$</p>
-<p><strong>位矢形式</strong>：<br>$\vec{r} &#x3D; \vec{r}(t)$</p>
-<p><strong>自然坐标形式</strong>：<br>$s &#x3D; f(t)$</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>抛体运动：<br>$\vec{r} &#x3D; \vec{v}_0 t + \frac{1}{2} \vec{g} t^2$</p>
-<h3 id="表示方法"><a href="#表示方法" class="headerlink" title="表示方法"></a>表示方法</h3><ul>
-<li><p>位矢法</p>
-</li>
-<li><p>坐标法</p>
-</li>
-<li><p>自然法</p>
-</li>
-</ul>
-<h2 id="位移"><a href="#位移" class="headerlink" title="位移"></a>位移</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
-<li><p><strong>位矢</strong>：位置矢量 $\vec{r}$</p>
-</li>
-<li><p><strong>位移</strong>：质点在某一段时间内位矢的增量 $\Delta \vec{r} &#x3D; \vec{r}_B - \vec{r}_A$</p>
-</li>
-<li><p><strong>路程</strong>：实际运动轨迹的长度</p>
-</li>
-<li><p><strong>时间与时刻</strong>：重要的时间概念区分</p>
-</li>
-</ul>
-<h3 id="重要区别"><a href="#重要区别" class="headerlink" title="重要区别"></a>重要区别</h3><ul>
-<li><p>位移大小：$|\Delta \vec{r}| &#x3D; |\vec{r}_B - \vec{r}_A|$</p>
-</li>
-<li><p>位矢大小的增量：$\Delta r &#x3D; |\vec{r}_B| - |\vec{r}_A|$</p>
-</li>
-<li><p>$\Delta r$ 与 $|\Delta \vec{r}|$ 不相同</p>
-</li>
-</ul>
-<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><h3 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h3><ul>
-<li><p><strong>平均速度</strong>：<br>$\vec{v} &#x3D; \frac{\Delta \vec{r}}{\Delta t}$</p>
-</li>
-<li><p><strong>瞬时速度</strong>：<br>$\vec{v} &#x3D; \lim_{\Delta t \to 0} \frac{\vec{r}(t + \Delta t) - \vec{r}(t)}{\Delta t} &#x3D; \lim_{\Delta t \to 0} \frac{\Delta \vec{r}}{\Delta t} &#x3D; \frac{d\vec{r}}{dt}$</p>
-</li>
-</ul>
-<h3 id="分量表示"><a href="#分量表示" class="headerlink" title="分量表示"></a>分量表示</h3><p>$\vec{v} &#x3D; v_x \vec{i} + v_y \vec{j} + v_z \vec{k} &#x3D; \frac{dx}{dt} \vec{i} + \frac{dy}{dt} \vec{j} + \frac{dz}{dt} \vec{k}$</p>
-<h3 id="速率"><a href="#速率" class="headerlink" title="速率"></a>速率</h3><p>速度的大小：<br>$v &#x3D; |\vec{v}| &#x3D; \sqrt{v_x^2 + v_y^2 + v_z^2}$</p>
-<h2 id="加速度"><a href="#加速度" class="headerlink" title="加速度"></a>加速度</h2><h3 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h3><ul>
-<li><p><strong>速度的增量</strong>：$\Delta \vec{v} &#x3D; \vec{v}<em>{P2} - \vec{v}</em>{P1}$</p>
-</li>
-<li><p><strong>平均加速度</strong>：<br>$\vec{a} &#x3D; \frac{\Delta \vec{v}}{\Delta t}$</p>
-</li>
-<li><p><strong>瞬时加速度</strong>：<br>$\vec{a} &#x3D; \lim_{\Delta t \to 0} \frac{\Delta \vec{v}}{\Delta t} &#x3D; \frac{d\vec{v}}{dt} &#x3D; \frac{d^2 \vec{r}}{dt^2}$</p>
-</li>
-</ul>
-<h3 id="分量表示-1"><a href="#分量表示-1" class="headerlink" title="分量表示"></a>分量表示</h3><p>$\vec{a} &#x3D; \frac{d\vec{v}}{dt} &#x3D; \frac{dv_x}{dt} \vec{i} + \frac{dv_y}{dt} \vec{j} + \frac{dv_z}{dt} \vec{k}$<br>$\vec{a} &#x3D; \frac{d^2 \vec{r}}{dt^2} &#x3D; \frac{d^2 x}{dt^2} \vec{i} + \frac{d^2 y}{dt^2} \vec{j} + \frac{d^2 z}{dt^2} \vec{k}$</p>
-<p><strong>加速度分量</strong>：<br>$a_x &#x3D; \frac{dv_x}{dt} &#x3D; \frac{d^2 x}{dt^2}$<br>$a_y &#x3D; \frac{dv_y}{dt} &#x3D; \frac{d^2 y}{dt^2}$<br>$a_z &#x3D; \frac{dv_z}{dt} &#x3D; \frac{d^2 z}{dt^2}$</p>
-<h2 id="直角坐标系下的表示"><a href="#直角坐标系下的表示" class="headerlink" title="直角坐标系下的表示"></a>直角坐标系下的表示</h2><h3 id="位移表示"><a href="#位移表示" class="headerlink" title="位移表示"></a>位移表示</h3><p><strong>位矢</strong>：<br>$\vec{r}_1 &#x3D; x_1 \vec{i} + y_1 \vec{j} + z_1 \vec{k}$<br>$\vec{r}_2 &#x3D; x_2 \vec{i} + y_2 \vec{j} + z_2 \vec{k}$</p>
-<p><strong>位移</strong>：<br>$\Delta \vec{r} &#x3D; \vec{r}_2 - \vec{r}_1 &#x3D; \Delta x \vec{i} + \Delta y \vec{j} + \Delta z \vec{k}$<br>$&#x3D; (x_2 - x_1) \vec{i} + (y_2 - y_1) \vec{j} + (z_2 - z_1) \vec{k}$</p>
-<p><strong>位移大小</strong>：<br>$|\Delta \vec{r}| &#x3D; |\vec{r}_2 - \vec{r}_1| &#x3D; \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}$</p>
-<p><strong>位移方向</strong>：<br>$\cos \alpha &#x3D; \frac{\Delta x}{|\Delta \vec{r}|}, \cos \beta &#x3D; \frac{\Delta y}{|\Delta \vec{r}|}, \cos \gamma &#x3D; \frac{\Delta z}{|\Delta \vec{r}|}$</p>
-<h3 id="加速度大小和方向"><a href="#加速度大小和方向" class="headerlink" title="加速度大小和方向"></a>加速度大小和方向</h3><p><strong>加速度大小</strong>：<br>$a &#x3D; \sqrt{a_x^2 + a_y^2 + a_z^2} &#x3D; \sqrt{\left( \frac{dv_x}{dt} \right)^2 + \left( \frac{dv_y}{dt} \right)^2 + \left( \frac{dv_z}{dt} \right)^2}$<br>$&#x3D; \sqrt{\left( \frac{d^2 x}{dt^2} \right)^2 + \left( \frac{d^2 y}{dt^2} \right)^2 + \left( \frac{d^2 z}{dt^2} \right)^2}$</p>
-<p><strong>速度和加速度的方向</strong>（用三个方位角 $\alpha, \beta, \gamma$ 表示）：<br>$\cos \alpha &#x3D; \frac{v_x}{|\vec{v}|}, \cos \beta &#x3D; \frac{v_y}{|\vec{v}|}, \cos \gamma &#x3D; \frac{v_z}{|\vec{v}|}$<br>$\cos \alpha’ &#x3D; \frac{a_x}{|\vec{a}|}, \cos \beta’ &#x3D; \frac{a_y}{|\vec{a}|}, \cos \gamma’ &#x3D; \frac{a_z}{|\vec{a}|}$</p>
-<h2 id="极坐标系中的径向速度"><a href="#极坐标系中的径向速度" class="headerlink" title="极坐标系中的径向速度"></a>极坐标系中的径向速度</h2><h3 id="证明径向速度是-frac-dr-dt"><a href="#证明径向速度是-frac-dr-dt" class="headerlink" title="证明径向速度是 $\frac{dr}{dt}$"></a>证明径向速度是 $\frac{dr}{dt}$</h3><ol>
-<li><p><strong>位置矢量的表示</strong>：<br>在极坐标系中，位置矢量 $\vec{r}$ 可以表示为：<br>$\vec{r} &#x3D; r \vec{e}_r$<br>其中，$\vec{e}_r$ 是径向单位向量，$r$ 是径向距离。</p>
-</li>
-<li><p><strong>速度的计算</strong>：<br>速度 $\vec{v}$ 是位置矢量 $\vec{r}$ 对时间 $t$ 的导数：<br>$\vec{v} &#x3D; \frac{d\vec{r}}{dt} &#x3D; \frac{d}{dt}(r \vec{e}_r)$</p>
-</li>
-<li><p><strong>应用乘积法则</strong>：<br>使用乘积法则展开导数：<br>$\vec{v} &#x3D; \frac{dr}{dt} \vec{e}_r + r \frac{d\vec{e}_r}{dt}$</p>
-</li>
-<li><p><strong>单位向量的导数</strong>：<br>在极坐标系中，径向单位向量 $\vec{e}<em>r$ 随角度 $\theta$ 变化而变化。其时间导数为：<br>$\frac{d\vec{e}<em>r}{dt} &#x3D; \frac{d\theta}{dt} \vec{e}</em>\theta$<br>其中，$\vec{e}</em>\theta$ 是横向单位向量。</p>
-</li>
-<li><p><strong>代入导数表达式</strong>：<br>将 $\frac{d\vec{e}_r}{dt}$ 代入速度表达式：<br>$\vec{v} &#x3D; \frac{dr}{dt} \vec{e}<em>r + r \frac{d\theta}{dt} \vec{e}</em>\theta$</p>
-</li>
-<li><p><strong>径向速度分量</strong>：<br>由此可知，速度的径向分量为 $\frac{dr}{dt}$，横向分量为 $r \frac{d\theta}{dt}$。</p>
-</li>
-</ol>
-<p>通过上述步骤，我们证明了径向速度确实是 $\frac{dr}{dt}$。此外，通过将笛卡尔坐标系中的速度分量转换到极坐标系中，并进行点乘验证，也得到了相同的结果，进一步确认了结论的正确性。</p>
-<p><strong>最终答案</strong>：<br>$\frac{dr}{dt}$</p>
-<h2 id="质点运动学的基本问题"><a href="#质点运动学的基本问题" class="headerlink" title="质点运动学的基本问题"></a>质点运动学的基本问题</h2><h3 id="问题类型一：已知运动方程"><a href="#问题类型一：已知运动方程" class="headerlink" title="问题类型一：已知运动方程"></a>问题类型一：已知运动方程</h3><p><strong>求解方法</strong>：微分法<br>$\vec{v} &#x3D; \frac{d\vec{r}}{dt}, \vec{a} &#x3D; \frac{d\vec{v}}{dt}$</p>
-<h3 id="问题类型二：已知加速度和初始条件"><a href="#问题类型二：已知加速度和初始条件" class="headerlink" title="问题类型二：已知加速度和初始条件"></a>问题类型二：已知加速度和初始条件</h3><p><strong>求解方法</strong>：积分法<br>$\vec{v} - \vec{v}<em>0 &#x3D; \int</em>{t_0}^{t} \vec{a} \cdot dt$<br>$\vec{r} - \vec{r}<em>0 &#x3D; \int</em>{t_0}^{t} \vec{v} \cdot dt$</p>
-<h2 id="例题解析"><a href="#例题解析" class="headerlink" title="例题解析"></a>例题解析</h2><h3 id="例题1：路灯人影问题"><a href="#例题1：路灯人影问题" class="headerlink" title="例题1：路灯人影问题"></a>例题1：路灯人影问题</h3><p><strong>题目</strong>：路灯距地面高h，一人身高l，在路上以匀速$v_0$行走，求人影中头顶的移动速度和影子长度增长的速率。</p>
-<p><strong>解</strong>：<br>根据几何关系：<br>$x^2 &#x3D; l^2 - h^2$</p>
-<p>对时间求导：<br>$v &#x3D; \frac{dx}{dt} &#x3D; \frac{l}{x} \frac{dl}{dt} &#x3D; \frac{\sqrt{x^2 + h^2}}{x} v_0$</p>
-<p><strong>加速度计算</strong>：<br>$a &#x3D; \frac{dv}{dt} &#x3D; \frac{d}{dt} \left( \frac{l}{x} v_0 \right) &#x3D; v_0 \frac{l’ \cdot x - x’ \cdot l}{x^2}$<br>$&#x3D; v_0 \left( \frac{v_0 \cdot x - v \cdot l}{x^2} \right) &#x3D; v_0 \left[ \frac{v_0 \cdot x - (v_0 l &#x2F; x) \cdot l}{x^2} \right]$<br>$&#x3D; v_0^2 \frac{x^2 - l^2}{x^3} &#x3D; -v_0^2 \frac{h^2}{x^3}$</p>
-<p><strong>说明</strong>：小船只沿x方向运动，简化为一维问题，可用标量处理。</p>
-<h3 id="例题2：变加速度直线运动"><a href="#例题2：变加速度直线运动" class="headerlink" title="例题2：变加速度直线运动"></a>例题2：变加速度直线运动</h3><p><strong>题目</strong>：一物体作直线运动，初速度为零，初加速度为 $a_0$，出发后经过时间间隔2秒，加速度均匀增加了 $a_0$，求经过t秒后物体的速度和离开出发点的距离。</p>
-<p><strong>解</strong>：已知加速度：<br>$a &#x3D; a_0 + \frac{a_0}{r} t \quad (r &#x3D; 2s)$</p>
-<p><strong>求速度</strong>：<br>$a &#x3D; \frac{dv}{dt} \Rightarrow dv &#x3D; a dt \Rightarrow dv &#x3D; a dt$<br>$v - 0 &#x3D; \int_{v_0}^{v} dv &#x3D; \int_{0}^{t} a dt &#x3D; \int_{0}^{t} \left( a_0 + \frac{a_0}{r} t \right) dt &#x3D; a_0 t + \frac{a_0}{2r} t^2$</p>
-<p><strong>求位移</strong>：<br>$v &#x3D; \frac{dx}{dt} \Rightarrow dx &#x3D; v dt$<br>$x - 0 &#x3D; \int_{0}^{t} v dt &#x3D; \int_{0}^{t} \left( a_0 t + \frac{a_0}{2r} t^2 \right) dt &#x3D; \frac{a_0}{2} t^2 + \frac{a_0}{6r} t^3$</p>
-<h2 id="思考题解答"><a href="#思考题解答" class="headerlink" title="思考题解答"></a>思考题解答</h2><h3 id="思考题1：地球可否看作质点？"><a href="#思考题1：地球可否看作质点？" class="headerlink" title="思考题1：地球可否看作质点？"></a>思考题1：地球可否看作质点？</h3><p><strong>解答</strong>：<br>地球能否看作质点取决于所研究问题的尺度：</p>
-<ul>
-<li><p>当研究地球绕太阳公转时，地球的尺寸远小于公转轨道半径，可以看作质点</p>
-</li>
-<li><p>当研究地球自转、地球上物体的运动或地球内部结构时，地球不能看作质点</p>
-</li>
-</ul>
-<p><strong>判断标准</strong>：</p>
-<ul>
-<li><p>物体的尺寸远小于运动尺度时，可看作质点</p>
-</li>
-<li><p>物体各点运动状态相同时，可看作质点</p>
-</li>
-</ul>
-<h3 id="思考题2：-frac-dr-dt-是速率吗？"><a href="#思考题2：-frac-dr-dt-是速率吗？" class="headerlink" title="思考题2：$\frac{dr}{dt}$ 是速率吗？"></a>思考题2：$\frac{dr}{dt}$ 是速率吗？</h3><p><strong>解答</strong>：<br>$\frac{dr}{dt}$ 不是速率，而是位矢大小的变化率。</p>
-<p><strong>区别</strong>：</p>
-<ul>
-<li><p>速率 $v &#x3D; |\vec{v}| &#x3D; \sqrt{v_x^2 + v_y^2 + v_z^2}$</p>
-</li>
-<li><p>$\frac{dr}{dt}$ 是位矢模长的变化率</p>
-</li>
-</ul>
-<p><strong>重要关系</strong>：<br>$\frac{dr}{dt} \neq \frac{d|\vec{r}|}{dt}$</p>
-<h3 id="思考题3：径向速度与横向速度的区别"><a href="#思考题3：径向速度与横向速度的区别" class="headerlink" title="思考题3：径向速度与横向速度的区别"></a>思考题3：径向速度与横向速度的区别</h3><p><strong>解答</strong>：<br>在极坐标系中：</p>
-<ul>
-<li><p><strong>径向速度</strong>：$\frac{dr}{dt}$，表示质点沿径向方向的速度分量</p>
-</li>
-<li><p><strong>横向速度</strong>：$r\frac{d\theta}{dt}$，表示质点垂直于径向方向的速度分量</p>
-</li>
-</ul>
-<p><strong>总速度</strong>：<br>$\vec{v} &#x3D; \frac{dr}{dt} \vec{e}<em>r + r \frac{d\theta}{dt} \vec{e}</em>\theta$</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/11/29/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/11/29/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2025-11-29 15:16:50 / Modified: 15:12:52" itemprop="dateCreated datePublished" datetime="2025-11-29T15:16:50+08:00">2025-11-29</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E8%8B%B1%E8%AF%AD/%E5%8D%95%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/10/19/%E8%80%83%E7%A0%94/%E8%8B%B1%E8%AF%AD/%E5%8D%95%E8%AF%8D/" class="post-title-link" itemprop="url">英语单词</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-19T00:00:00+08:00">2025-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-29 15:13:01" itemprop="dateModified" datetime="2025-11-29T15:13:01+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E8%8B%B1%E8%AF%AD/" itemprop="url" rel="index"><span itemprop="name">英语</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E8%8B%B1%E8%AF%AD/%E5%8D%95%E8%AF%8D/" itemprop="url" rel="index"><span itemprop="name">单词</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>implement</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%9E%81%E9%99%90%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%9E%81%E9%99%90%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">极限问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-19T00:00:00+08:00">2025-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-29 19:25:49" itemprop="dateModified" datetime="2025-11-29T19:25:49+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">高数</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><p>lim 指代入。主要分两类。<strong>注意0为假0，极限趋于但不等于！！！</strong></p>
-<h2 id="区分是否可以计算"><a href="#区分是否可以计算" class="headerlink" title="区分是否可以计算"></a>区分是否可以计算</h2><p>1.<strong>可以计算</strong> </p>
-<p>①可以直接算</p>
-<p>②可以感知：$\frac{1}{∞}$ &#x3D; 0， $\frac{1}{0}$ &#x3D;∞</p>
-<p>2.<strong>不可计算（表面上）[未定式、代数式]</strong> </p>
-<p>①<strong>两个基本</strong></p>
-<p>$\frac{∞}{∞}$</p>
-<p>$\frac{0}{0}$</p>
-<p>②<strong>其他</strong></p>
-<p>   0·∞</p>
-<p>$$<br>0^0 &#x3D; e^{0 \cdot \ln 0} &#x3D; e^{0 \cdot (-\infty)}<br>$$</p>
-<p>③<strong>一个例外</strong> </p>
-<p>$1^\infty$  注意1为假1。</p>
-<h2 id="基本等价表"><a href="#基本等价表" class="headerlink" title="基本等价表"></a>基本等价表</h2><p>当 $x \to 0$ 时，常见的等价无穷小替换有：</p>
-<p>$$<br>\begin{aligned}<br>\sin x &amp;\sim x \<br>\tan x &amp;\sim x \<br>\ln(1 + x) &amp;\sim x \<br>e^x - 1 &amp;\sim x \<br>\arcsin x &amp;\sim x \<br>\arctan x &amp;\sim x \<br>\log_a(1 + x) &amp;\sim \frac{x}{\ln a} \<br>a^x - 1 &amp;\sim x \ln a \<br>1 - \cos x &amp;\sim \frac{1}{2}x^2 \<br>(1 + x)^n - 1 &amp;\sim n x<br>\end{aligned}<br>$$</p>
-<hr>
-<h1 id="求解一元极限"><a href="#求解一元极限" class="headerlink" title="求解一元极限"></a>求解一元极限</h1><hr>
-<h2 id="对于-frac-0-0-型有以下方法："><a href="#对于-frac-0-0-型有以下方法：" class="headerlink" title="对于$\frac{0}{0}$ 型有以下方法："></a>对于$\frac{0}{0}$ 型有以下方法：</h2><p>①保低去高处理加减法</p>
-<p>②等价表处理乘除以及函数内层</p>
-<p>③泰勒展开式处理加减乘除</p>
-<p>④不得已洛必达法则</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%A0%B9%E5%8F%B7%E5%A4%84%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%A0%B9%E5%8F%B7%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">根号的处理方法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-19T00:00:00+08:00">2025-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-29 19:25:33" itemprop="dateModified" datetime="2025-11-29T19:25:33+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">高数</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="sqrt-的处理"><a href="#sqrt-的处理" class="headerlink" title="$\sqrt{}$ 的处理"></a>$\sqrt{}$ 的处理</h1><p>对于 $\sqrt{}$，我们有四大方法：</p>
-<h2 id="一、两大非负性"><a href="#一、两大非负性" class="headerlink" title="一、两大非负性"></a>一、两大非负性</h2><ol>
-<li><strong>根号下的值非负</strong>：$\sqrt{A}$ 要求 $A \geq 0$</li>
-<li><strong>根号运算的结果非负</strong>：$\sqrt{A} \geq 0$</li>
-</ol>
-<p>三大非负数</p>
-<p>在实数范围内，以下三种形式的结果都是非负数：</p>
-<ol>
-<li><strong>算术平方根</strong>：$\sqrt{a} \geq 0$</li>
-<li><strong>绝对值</strong>：$|a| \geq 0$  </li>
-<li><strong>平方</strong>：$a^2 \geq 0$</li>
-</ol>
-<p>例子： $y &#x3D; \sqrt{x-1} + \sqrt{1-x}$</p>
-<h2 id="二、两种去根号"><a href="#二、两种去根号" class="headerlink" title="二、两种去根号"></a>二、两种去根号</h2><p>1.<strong>从内</strong>：$\sqrt{a}$  $&#x3D;$ $|a|$ $\rightarrow$ 配方法 :</p>
-<p>$$<br>(a \pm b)^2 &#x3D; a^2 \pm 2ab + b^2<br>$$</p>
-<p>2.<strong>从外</strong>：</p>
-<p>$$<br>(\sqrt{a})^2 &#x3D; a \quad \text{其中 } a \geq 0<br>$$</p>
-<h2 id="三、两种有理化"><a href="#三、两种有理化" class="headerlink" title="三、两种有理化"></a>三、两种有理化</h2><p>1.分子有理化</p>
-<p>2.分母有理化</p>
-<h2 id="四、两种换元法"><a href="#四、两种换元法" class="headerlink" title="四、两种换元法"></a>四、两种换元法</h2><p>1.整体换元法：</p>
-<p>例如：$\sqrt{x} &#x3D; t$ 我们进行反解可得到x&#x3D;f(t)，如果f(t)中不带根号，则说明反解过程成功，可以进行整体换元法。</p>
-<p>2.三角换元法：</p>
-<p>基于三角函数的六边形记忆法的特性，我们有三大换元法：</p>
-<p>2.1 $\sqrt{a^2 - x^2}$ 型</p>
-<p><strong>令：</strong> $x &#x3D; a \sin t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{a^2 - x^2} &#x3D; \sqrt{a^2 - (a \sin t)^2} &#x3D; \sqrt{a^2(1 - \sin^2 t)} &#x3D; a|\cos t|<br>$</p>
-<p><strong>定义域：</strong> $t \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$<br>在此区间内 $\cos t \geq 0$，所以：<br>$\sqrt{a^2 - x^2} &#x3D; a \cos t$</p>
-<p><strong>也可令：</strong> $x &#x3D; a \cos t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{a^2 - x^2} &#x3D; \sqrt{a^2 - (a \cos t)^2} &#x3D; \sqrt{a^2(1 - \cos^2 t)} &#x3D; a|\sin t|<br>$</p>
-<p><strong>定义域：</strong> $t \in [0, \pi]$<br>在此区间内 $\sin t \geq 0$，所以：<br>$\sqrt{a^2 - x^2} &#x3D; a \sin t$</p>
-<p>2.2$\sqrt{x^2 + a^2}$ 型</p>
-<p><strong>令：</strong> $x &#x3D; a \tan t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{x^2 + a^2} &#x3D; \sqrt{(a \tan t)^2 + a^2} &#x3D; \sqrt{a^2(\tan^2 t + 1)} &#x3D; a|sec t|<br>$</p>
-<p><strong>定义域：</strong> $t \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$<br>在此区间内 $\sec t &gt; 0$，所以：</p>
-<p>$\sqrt{x^2 + a^2} &#x3D; asect$</p>
-<p>2.3$\sqrt{x^2 - a^2}$</p>
-<p><strong>令：</strong> $x &#x3D; a \sec t$</p>
-<p><strong>则：</strong><br>$<br>\sqrt{x^2 - a^2} &#x3D; \sqrt{(a \sec t)^2 - a^2} &#x3D; \sqrt{a^2(\sec^2 t - 1)} &#x3D; a|\tan t|<br>$</p>
-<p><strong>定义域：</strong> </p>
-<ul>
-<li><p>当 $x \geq a &gt; 0$ 时：$t \in \left[0, \frac{\pi}{2}\right)$</p>
-</li>
-<li><p>当 $x \leq -a &lt; 0$ 时：$t \in \left(\frac{\pi}{2}, \pi\right]$<br>在这两个区间内 $\tan t \geq 0$，所以：</p>
-<p>$$<br>\sqrt{x^2 - a^2} &#x3D; a \tan t<br>$$</p>
-</li>
-</ul>
-<hr>
-<p>类似的，对于积分类的题目，我们也要注意三角换元法的应用：</p>
-<p>例： $\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx$的求解</p>
-<h3 id="解题步骤"><a href="#解题步骤" class="headerlink" title="解题步骤"></a>解题步骤</h3><p><strong>1. 三角代换</strong><br>令 $x &#x3D; \tan t$，则：<br>$<br>\begin{aligned}<br>\arctan x &amp;&#x3D; t \<br>e^{\arctan x} &amp;&#x3D; e^t \<br>1 + x^2 &amp;&#x3D; \sec^2 t \<br>(1+x^2)^{3&#x2F;2} &amp;&#x3D; \sec^3 t \<br>dx &amp;&#x3D; \sec^2 t  dt<br>\end{aligned}<br>$</p>
-<p><strong>2. 积分变换</strong><br>$<br>\begin{aligned}<br>&amp;\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx \<br>&amp;&#x3D; \int \frac{\tan t \cdot e^t}{\sec^3 t} \cdot \sec^2 t  dt \<br>&amp;&#x3D; \int e^t \cdot \tan t \cdot \cos t  dt \<br>&amp;&#x3D; \int e^t \sin t  dt<br>\end{aligned}<br>$</p>
-<p><strong>3. 求解 $\int e^t \sin t  dt$</strong><br>$<br>\int e^t \sin t  dt &#x3D; \frac{1}{2} e^t (\sin t - \cos t) + C<br>$</p>
-<p><strong>4. 变量回代</strong><br>$<br>\begin{aligned}<br>&amp;\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx \<br>&amp;&#x3D; \frac{1}{2} e^{\arctan x} \left( \frac{x}{\sqrt{1+x^2}} - \frac{1}{\sqrt{1+x^2}} \right) + C \<br>&amp;&#x3D; \frac{(x - 1) e^{\arctan x}}{2\sqrt{1+x^2}} + C<br>\end{aligned}<br>$</p>
-<h3 id="最终答案"><a href="#最终答案" class="headerlink" title="最终答案"></a>最终答案</h3><p>$$<br>\boxed{\int \frac{x e^{\arctan x}}{(1+x^2)^{3&#x2F;2}} dx &#x3D; \frac{(x - 1) e^{\arctan x}}{2\sqrt{1+x^2}} + C}<br>$$</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/10/19/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">总：高等数学理解与大纲</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-10-19 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-19T00:00:00+08:00">2025-10-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-29 19:29:23" itemprop="dateModified" datetime="2025-11-29T19:29:23+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">高数</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><p>高等数学的高体现在无穷次与微，而微是小且近的意思，近是用工具–极限来刻画的–无限接近永不到达。数学的意思是：对象为函数，研究对象的四则运算。</p>
-<p>高等数学的函数对象是五指山与六指琴魔：</p>
-<p>五指山：幂、指、对、三角、反三角</p>
-<p>六指琴魔：变限函数</p>
-<p>数学的学习方法：what and how ，no why。<br>过河拆桥，顺着去反过来。</p>
-<p><strong>幂函数</strong>：</p>
-<p><strong>指数函数</strong>：</p>
-<p><strong>对数函数</strong>：</p>
-<p><strong>三角函数</strong>：</p>
-<p>$\sin x$ - 正弦函数<br>$\cos x$ - 余弦函数<br>$\tan x$ - 正切函数<br>$\cot x$ - 余切函数<br>$\sec x$ - 正割函数<br>$\csc x$ - 余割函数</p>
-<p><strong>反三角函数</strong>：</p>
-<p>$\arcsin x$ - 反正弦函数<br>$\arccos x$ - 反余弦函数<br>$\arctan x$ - 反正切函数</p>
-<h3 id="对于反三角："><a href="#对于反三角：" class="headerlink" title="对于反三角："></a>对于反三角：</h3><p><strong>反正弦：</strong> 它是一个角，它的范围是 $\text{值域} \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]$，它的正弦是 $x$<br>$<br>\arcsin x, \quad x \in [-1, 1], \quad \text{值域} \in \left[-\frac{\pi}{2}, \frac{\pi}{2}\right]<br>$</p>
-<p><strong>反余弦：</strong> 它是一个角，它的范围是 $\text{值域} \in \left[0, \pi\right]$，它的余弦是 $x$<br>$<br>\arccos x, \quad x \in [-1, 1], \quad \text{值域} \in \left[0, \pi\right]<br>$</p>
-<p><strong>反正切：</strong> 它是一个角，它的范围是 $\text{值域} \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)$，它的正切是 $x$<br>$<br>\arctan x, \quad x \in \mathbb{R}, \quad \text{值域} \in \left(-\frac{\pi}{2}, \frac{\pi}{2}\right)<br>$</p>
-<h2 id="对于三角函数："><a href="#对于三角函数：" class="headerlink" title="对于三角函数："></a>对于三角函数：</h2><h3 id="一、三角函数六边形"><a href="#一、三角函数六边形" class="headerlink" title="一、三角函数六边形"></a>一、三角函数六边形</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">    sinx————————————cosx</span><br><span class="line">   /                    \</span><br><span class="line">  /                      \</span><br><span class="line"> /                        \</span><br><span class="line">tanx         1           cotx</span><br><span class="line"> \                        /</span><br><span class="line">  \                      /</span><br><span class="line">   \                    /</span><br><span class="line">    secx————————————cscx</span><br><span class="line"></span><br><span class="line">左正右负，上弦中切下割，中心为1</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><strong>倒数关系</strong>（对角线）：<ul>
-<li>$\sin \leftrightarrow \csc$</li>
-<li>$\cos \leftrightarrow \sec$ </li>
-<li>$\tan \leftrightarrow \cot$</li>
-</ul>
-</li>
-<li><strong>乘积关系</strong>（顺时针相邻）：<ul>
-<li>$\sin \cdot \cos &#x3D; \tan$</li>
-<li>$\cos \cdot \tan &#x3D; \cot$</li>
-<li>$\tan \cdot \cot &#x3D; \sec$</li>
-<li>$\cot \cdot \sec &#x3D; \csc$</li>
-<li>$\sec \cdot \csc &#x3D; \sin$</li>
-<li>$\csc \cdot \sin &#x3D; \cos$</li>
-</ul>
-</li>
-<li><strong>平方关系</strong>（倒三角）：<ul>
-<li>$\sin^2 + \cos^2 &#x3D; 1$</li>
-<li>$1 + \tan^2 &#x3D; \sec^2$</li>
-<li>$1 + \cot^2 &#x3D; \csc^2$</li>
-</ul>
-</li>
-</ol>
-<h3 id="二、基本倍角公式"><a href="#二、基本倍角公式" class="headerlink" title="二、基本倍角公式"></a>二、基本倍角公式</h3><p><strong>正弦倍角：</strong><br>$<br>\sin 2\alpha &#x3D; 2\sin\alpha \cos\alpha<br>$</p>
-<p><strong>余弦倍角：</strong><br>$<br>\begin{aligned}<br>\cos 2\alpha &amp;&#x3D; \cos^2\alpha - \sin^2\alpha \<br>&amp;&#x3D; 2\cos^2\alpha - 1 \<br>&amp;&#x3D; 1 - 2\sin^2\alpha<br>\end{aligned}<br>$</p>
-<p><strong>正切倍角：</strong><br>$<br>\tan 2\alpha &#x3D; \frac{2\tan\alpha}{1 - \tan^2\alpha}$</p>
-<h2 id="三倍角公式"><a href="#三倍角公式" class="headerlink" title="三倍角公式"></a>三倍角公式</h2><p><strong>正弦三倍角：</strong></p>
-<p>$\sin 3\alpha &#x3D; 3\sin\alpha - 4\sin^3\alpha<br>$<br><strong>余弦三倍角：</strong><br>$<br>\cos 3\alpha &#x3D; 4\cos^3\alpha - 3\cos\alpha<br>$</p>
-<h3 id="三、基本半角公式"><a href="#三、基本半角公式" class="headerlink" title="三、基本半角公式"></a>三、基本半角公式</h3><p><strong>正弦半角：</strong><br>$<br>\sin\frac{\alpha}{2} &#x3D; \pm \sqrt{\frac{1 - \cos\alpha}{2}}<br>$</p>
-<p><strong>余弦半角：</strong><br>$<br>\cos\frac{\alpha}{2} &#x3D; \pm \sqrt{\frac{1 + \cos\alpha}{2}}<br>$</p>
-<p><strong>正切半角：</strong><br>$<br>\tan\frac{\alpha}{2} &#x3D; \pm \sqrt{\frac{1 - \cos\alpha}{1 + \cos\alpha}} &#x3D; \frac{\sin\alpha}{1 + \cos\alpha} &#x3D; \frac{1 - \cos\alpha}{\sin\alpha}<br>$</p>
-<p><strong>符号取决于象限。</strong></p>
-<h3 id="四、-“1”-的处理技巧"><a href="#四、-“1”-的处理技巧" class="headerlink" title="四、 “1” 的处理技巧"></a>四、 “1” 的处理技巧</h3><p>$$<br>1 \pm \sin x &#x3D; 1 \pm 2\sin\frac{x}{2}\cos\frac{x}{2}<br>$$</p>
-<p>$$<br>1 + \cos x &#x3D; 2\cos^2\frac{x}{2}<br>$$</p>
-<p>$$<br>1 - \cos x &#x3D; 2\sin^2\frac{x}{2}<br>$$</p>
-<p>$$<br>\sin^2 x + \cos^2 x &#x3D; 1<br>$$</p>
-<p>$$<br>1 + \tan^2 x &#x3D; \sec^2 x<br>$$</p>
-<p>$$<br>1 + \cot^2 x &#x3D; \csc^2 x<br>$$</p>
-<h3 id="五、导数"><a href="#五、导数" class="headerlink" title="五、导数"></a>五、导数</h3><h3 id="三角函数导数"><a href="#三角函数导数" class="headerlink" title="三角函数导数"></a>三角函数导数</h3><p>$$<br>\begin{aligned}<br>\frac{d}{dx} \sin x &amp;&#x3D; \cos x, &amp; \frac{d}{dx} \cos x &amp;&#x3D; -\sin x \<br>\frac{d}{dx} \tan x &amp;&#x3D; \sec^2 x, &amp; \frac{d}{dx} \cot x &amp;&#x3D; -\csc^2 x \<br>\frac{d}{dx} \sec x &amp;&#x3D; \sec x \tan x, &amp; \frac{d}{dx} \csc x &amp;&#x3D; -\csc x \cot x<br>\end{aligned}<br>$$</p>
-<h3 id="反三角函数导数"><a href="#反三角函数导数" class="headerlink" title="反三角函数导数"></a>反三角函数导数</h3><p>$$<br>\begin{aligned}<br>\frac{d}{dx} \arcsin x &amp;&#x3D; \frac{1}{\sqrt{1-x^2}} \<br>\frac{d}{dx} \arccos x &amp;&#x3D; -\frac{1}{\sqrt{1-x^2}} \<br>\frac{d}{dx} \arctan x &amp;&#x3D; \frac{1}{1+x^2}\<br>\frac{d}{dx} \operatorname{arccot} x &#x3D; -\frac{1}{1+x^2}<br>\end{aligned}<br>$$</p>
-<p><strong>定义域说明：</strong></p>
-<ul>
-<li>$\arcsin x$ 和 $\arccos x$：$|x| &lt; 1$</li>
-<li>$\arctan x$：$x \in \mathbb{R}$</li>
-</ul>
-<hr>
-<h2 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h2><p>分势分三分，一为通分（+，-），二为约分（×，÷），三为部分（部分分式分解）。部分又分为软拆与硬拆。于是我们形成了两种拆法，四大目标：</p>
-<h3 id="1-软拆（公式拆）"><a href="#1-软拆（公式拆）" class="headerlink" title="1.软拆（公式拆）"></a>1.软拆（公式拆）</h3><p>$$<br>\frac{a+b}{ab} &#x3D; \frac{1}{a} + \frac{1}{b}<br>$$</p>
-<p>$$<br>\frac{a-b}{ab} &#x3D; \frac{1}{a} - \frac{1}{b}<br>$$</p>
-<p>$$<br>\frac{ma+b}{a} &#x3D; m + \frac{b}{a}<br>$$</p>
-<p>$$<br>\frac{ma + nb}{ab} &#x3D; \frac{m}{b} + \frac{n}{a}<br>$$</p>
-<h3 id="二、硬拆-（四大目标）"><a href="#二、硬拆-（四大目标）" class="headerlink" title="二、硬拆    （四大目标）"></a>二、硬拆    （四大目标）</h3><p>$$<br>\int \frac{1}{x + a}  dx &#x3D; \ln|x + a| + C<br>$$</p>
-<p>$$<br>\int \frac{1}{(x + a)^n}  dx &#x3D; \frac{(x + a)^{-n+1}}{-n + 1} + C \quad (n \neq 1)<br>$$</p>
-<hr>
-<p><strong>条件：</strong> $x^2 + bx + c$ <strong>不可分解</strong>，即判别式 $\Delta &#x3D; b^2 - 4c &lt; 0$<br>$$<br>\int \frac{1}{x^2 + bx + c}  dx<br>$$<br>解法：通过配方化为 $\int \frac{1}{(x + p)^2 + q^2}  dx$ 形式，然后使用反正切函数积分。</p>
-<p><strong>条件：</strong> $x^2 + bx + c$ <strong>不可分解</strong>，即判别式 $\Delta &#x3D; b^2 - 4c &lt; 0$</p>
-<hr>
-<p>$$<br>\int \frac{mx + n}{x^2 + bx + c}  dx<br>$$</p>
-<p>解法：</p>
-<ol>
-<li>将分子拆分为分母导数的倍数 + 常数</li>
-<li>分别积分：<ul>
-<li>第一部分化为 $\ln|x^2 + bx + c|$</li>
-<li>第二部分化为第三类形式</li>
-</ul>
-</li>
-</ol>
-<hr>
-<p>对于待定系数法在部分方面，就是要拆解成四大目标求解：</p>
-<h1 id="部分分式分解的两种情况"><a href="#部分分式分解的两种情况" class="headerlink" title="部分分式分解的两种情况"></a>部分分式分解的两种情况</h1><h2 id="情况-1：分母含有线性因式"><a href="#情况-1：分母含有线性因式" class="headerlink" title="情况 1：分母含有线性因式"></a>情况 1：分母含有<strong>线性因式</strong></h2><p>这是最简单的情况。</p>
-<p><strong>规则：</strong> 对于分母中的每个形如 $(ax+b)^k$ 的因式，分解后对应 <strong>$k$ 个</strong> 分式之和：</p>
-<p>markdown</p>
-<p>$$<br>\frac{A_1}{ax+b} + \frac{A_2}{(ax+b)^2} + \cdots + \frac{A_k}{(ax+b)^k}<br>$$</p>
-<p>其中 $A_1, A_2, \dots, A_k$ 是待定系数。</p>
-<hr>
-<h2 id="情况-2：分母含有不可约的二次因式"><a href="#情况-2：分母含有不可约的二次因式" class="headerlink" title="情况 2：分母含有不可约的二次因式"></a>情况 2：分母含有<strong>不可约的二次因式</strong></h2><p>当分母含有在实数范围内无法再分解的二次因式（即判别式 $\Delta &lt; 0$）时。</p>
-<p><strong>规则：</strong> 对于分母中的每个形如 $(ax^2+bx+c)^k$ 的因式，分解后对应 <strong>$k$ 个</strong> 分式之和：</p>
-<p>markdown</p>
-<p>$$<br>\frac{A_1x + B_1}{ax^2+bx+c} + \frac{A_2x + B_2}{(ax^2+bx+c)^2} + \cdots + \frac{A_kx + B_k}{(ax^2+bx+c)^k}<br>$$</p>
-<p><strong>注意：</strong> 分子是<strong>一次式</strong> $A_ix + B_i$，而不是常数。</p>
-<hr>
-<h2 id="核心要点总结"><a href="#核心要点总结" class="headerlink" title="核心要点总结"></a>核心要点总结</h2><ol>
-<li><p><strong>线性因式</strong> $(ax+b)^k$ → $k$ 项，分子为<strong>常数</strong></p>
-</li>
-<li><p><strong>二次因式</strong> $(ax^2+bx+c)^k$ → $k$ 项，分子为<strong>一次式</strong></p>
-</li>
-<li><p>每个因式的<strong>重数 $k$</strong> 决定了分解后的<strong>项数</strong></p>
-</li>
-<li><p>二次因式必须满足 <strong>$\Delta &lt; 0$</strong>（在实数范围内不可约）</p>
-</li>
-</ol>
-<p>这样转化后，内容结构更清晰，公式也符合 Hexo 的渲染语法。</p>
-<hr>
-<p>例：积分计算：$\int \frac{3x+6}{(x-1)^2(x^2+x+1)} dx$</p>
-<ol>
-<li><p>部分分式分解与积分</p>
-<p>设：</p>
-<p>$$<br>\frac{3x+6}{(x-1)^2(x^2+x+1)} &#x3D; \frac{A}{x-1} + \frac{B}{(x-1)^2} + \frac{Cx+D}{x^2+x+1}<br>$$</p>
-<p>通分比较分子：</p>
-<p>$$<br>3x+6 &#x3D; A(x-1)(x^2+x+1) + B(x^2+x+1) + (Cx+D)(x-1)^2<br>$$</p>
-<p>解得：</p>
-<p>$$<br>A &#x3D; -1, \quad B &#x3D; 3, \quad C &#x3D; 1, \quad D &#x3D; 2<br>$$</p>
-<p>原积分化为：</p>
-<p>$$<br>\int \left[ -\frac{1}{x-1} + \frac{3}{(x-1)^2} + \frac{x+2}{x^2+x+1} \right] dx<br>$$</p>
-<ol start="2">
-<li>分别计算三项积分</li>
-</ol>
-<p><strong>第一项：</strong></p>
-<p>$$<br>\int -\frac{1}{x-1} dx &#x3D; -\ln|x-1|<br>$$</p>
-<p><strong>第二项：</strong></p>
-<p>$$<br>\int \frac{3}{(x-1)^2} dx &#x3D; -\frac{3}{x-1}<br>$$</p>
-<p><strong>第三项：</strong><br>将分子拆分：</p>
-<p>$$<br>\frac{x+2}{x^2+x+1} &#x3D; \frac{1}{2} \cdot \frac{2x+1}{x^2+x+1} + \frac{3}{2} \cdot \frac{1}{x^2+x+1}<br>$$</p>
-<p>分别积分：</p>
-<p>$$<br>\int \frac{2x+1}{x^2+x+1} dx &#x3D; \ln|x^2+x+1|<br>$$</p>
-<p>$$<br>\int \frac{1}{x^2+x+1} dx &#x3D; \int \frac{1}{(x+\frac{1}{2})^2 + (\frac{\sqrt{3}}{2})^2} dx &#x3D; \frac{2}{\sqrt{3}} \arctan\left(\frac{2x+1}{\sqrt{3}}\right)<br>$$</p>
-<p>所以：</p>
-<p>$$<br>\int \frac{x+2}{x^2+x+1} dx &#x3D; \frac{1}{2} \ln|x^2+x+1| + \sqrt{3} \arctan\left(\frac{2x+1}{\sqrt{3}}\right)<br>$$</p>
-<ol start="3">
-<li>最终答案</li>
-</ol>
-<p>$$<br>\int \frac{3x+6}{(x-1)^2(x^2+x+1)} dx &#x3D; -\ln|x-1| - \frac{3}{x-1} + \frac{1}{2} \ln|x^2+x+1| + \sqrt{3} \arctan\left(\frac{2x+1}{\sqrt{3}}\right) + C<br>$$</p>
-</li>
-</ol>
-<hr>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>方程与函数</strong> ：“$&#x3D;$”代表方程，方程方法为降次与消元。函数主要分为定义域函数与图像。</p>
-<p><strong>点</strong> ：端点、极值点、最值点、拐点、驻点</p>
-<p><strong>元的个数</strong>： 1.对于方程来说，元代表的是未知数的个数。</p>
-<p>2.对于函数来说，元指的是自变量的个数。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://kaorimiyazono518.github.io/2025/10/18/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%B3%B0%E5%8B%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/kaorimiyazono518/images/avatar.gif">
-      <meta itemprop="name" content="kaorimiyazono">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Kaorimiyazono">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/kaorimiyazono518/2025/10/18/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/%E6%B3%B0%E5%8B%92/" class="post-title-link" itemprop="url">泰勒公式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-10-18 15:30:00" itemprop="dateCreated datePublished" datetime="2025-10-18T15:30:00+08:00">2025-10-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-11-29 15:13:04" itemprop="dateModified" datetime="2025-11-29T15:13:04+08:00">2025-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/" itemprop="url" rel="index"><span itemprop="name">考研</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/kaorimiyazono518/categories/%E8%80%83%E7%A0%94/%E6%95%B0%E5%AD%A6/%E9%AB%98%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">高数</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="麦克劳林公式与泰勒展开"><a href="#麦克劳林公式与泰勒展开" class="headerlink" title="麦克劳林公式与泰勒展开"></a>麦克劳林公式与泰勒展开</h1><h2 id="1-未定式-frac-0-0-型极限"><a href="#1-未定式-frac-0-0-型极限" class="headerlink" title="1. 未定式 $\frac{0}{0}$ 型极限"></a>1. 未定式 $\frac{0}{0}$ 型极限</h2><h3 id="Taylor-展开：-x-to-0-（对于-x-to-1-的情况，令-t-x-1-，则-t-to-0-）"><a href="#Taylor-展开：-x-to-0-（对于-x-to-1-的情况，令-t-x-1-，则-t-to-0-）" class="headerlink" title="Taylor 展开：$x \to 0$（对于 $x \to 1$ 的情况，令 $t &#x3D; x-1$，则 $t \to 0$）"></a>Taylor 展开：$x \to 0$（对于 $x \to 1$ 的情况，令 $t &#x3D; x-1$，则 $t \to 0$）</h3><h4 id="Taylor-公式："><a href="#Taylor-公式：" class="headerlink" title="Taylor 公式："></a>Taylor 公式：</h4><p>$$f(x) &#x3D; f(x_0) + \frac{f’(x_0)}{1!}(x-x_0) + \frac{f’’(x_0)}{2!}(x-x_0)^2 + \cdots$$</p>
-<p>$$+ \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n + R_n(x)$$</p>
-<p>$$R_n(x) &#x3D; o[(x-x_0)^n]$$</p>
-<hr>
-<p>将 $x_0$ 取为 $0$ 即得到麦克劳林展开：</p>
-<h3 id="常用麦克劳林展开公式："><a href="#常用麦克劳林展开公式：" class="headerlink" title="常用麦克劳林展开公式："></a>常用麦克劳林展开公式：</h3><h4 id="指数函数："><a href="#指数函数：" class="headerlink" title="指数函数："></a>指数函数：</h4><p>$$e^x &#x3D; \sum_{n&#x3D;0}^{\infty} \frac{x^n}{n!} &#x3D; 1 + x + \frac{x^2}{2!} + \cdots + \frac{x^n}{n!} + o(x^n)$$</p>
-<h4 id="正弦函数："><a href="#正弦函数：" class="headerlink" title="正弦函数："></a>正弦函数：</h4><p>$$\sin x &#x3D; \sum_{n&#x3D;0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1} &#x3D; x - \frac{x^3}{3!} + \frac{x^5}{5!} - \cdots + \frac{(-1)^n}{(2n+1)!} x^{2n+1} + o(x^{2n+1})$$</p>
-<h4 id="余弦函数："><a href="#余弦函数：" class="headerlink" title="余弦函数："></a>余弦函数：</h4><p>$$\cos x &#x3D; \sum_{n&#x3D;0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n} &#x3D; 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \cdots + \frac{(-1)^n}{(2n)!} x^{2n} + o(x^{2n})$$</p>
-<h4 id="二项式展开："><a href="#二项式展开：" class="headerlink" title="二项式展开："></a>二项式展开：</h4><p>$$(1+x)^\alpha &#x3D; 1 + \sum_{n&#x3D;1}^{\infty} \frac{\alpha(\alpha-1) \cdots (\alpha-n+1)}{n!} x^n$$</p>
-<p>$$&#x3D; 1 + \alpha x + \frac{\alpha(\alpha-1)}{2!} x^2 + \cdots + \frac{\alpha(\alpha-1) \cdots (\alpha-n+1)}{n!} x^n + o(x^n)$$</p>
-<p>$$ \sqrt{1+x} &#x3D; 1 + \frac{1}{2}x - \frac{1}{8}x^2 + \frac{1}{16}x^3 - \frac{5}{128}x^4 + o(x^4) $$</p>
-<h4 id="几何级数："><a href="#几何级数：" class="headerlink" title="几何级数："></a>几何级数：</h4><p>$$\frac{1}{1+x} &#x3D; \sum_{n&#x3D;0}^{\infty} (-1)^n x^n &#x3D; 1 - x + x^2 - x^3 + \cdots + (-1)^n x^n + o(x^n)$$</p>
-<p>$$\frac{1}{1-x} &#x3D; \sum_{n&#x3D;0}^{\infty} x^n &#x3D; 1 + x + x^2 + x^3 + \cdots + x^n + o(x^n)$$</p>
-<h4 id="对数函数："><a href="#对数函数：" class="headerlink" title="对数函数："></a>对数函数：</h4><p>$$\ln(1+x) &#x3D; \sum_{n&#x3D;0}^{\infty} \frac{(-1)^n}{n+1} x^{n+1} &#x3D; x - \frac{1}{2}x^2 + \frac{1}{3}x^3 - \cdots + \frac{(-1)^n}{n+1} x^{n+1} + o(x^{n+1})$$</p>
-<h4 id="正切函数："><a href="#正切函数：" class="headerlink" title="正切函数："></a>正切函数：</h4><p>$$\tan x &#x3D; x + \frac{1}{3}x^3 + \frac{2}{15}x^5 + o(x^5)$$</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
 
 </div>
   </main>

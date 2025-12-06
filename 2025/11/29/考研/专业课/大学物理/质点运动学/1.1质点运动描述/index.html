@@ -71,6 +71,50 @@
 <script src="/kaorimiyazono518/js/third-party/math/mathjax.js" defer></script>
 
 
+
+  <noscript>
+    <link rel="stylesheet" href="/kaorimiyazono518/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/kaorimiyazono518/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Kaorimiyazono</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/kaorimiyazono518/custom-home/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/kaorimiyazono518/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/kaorimiyazono518/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/kaorimiyazono518/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/kaorimiyazono518/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
 <header class="custom-header">
   <div class="header-container">
     
@@ -123,8 +167,11 @@
         <!-- 音乐文件请放置在 source/music/ 目录下 -->
         <source src="/music/song1.mp3" type="audio/mpeg">
         <source src="/music/song2.mp3" type="audio/mpeg">
+        <source src="/music/song3.mp3" type="audio/mpeg">
+        <source src="/music/song4.mp3" type="audio/mpeg">
+        <source src="/music/song5.mp3" type="audio/mpeg">
         您的浏览器不支持音频播放。
-      </audio>
+       </audio>
     </div>
 
     <!-- 右侧：实时时间 -->
@@ -386,481 +433,11 @@ body {
     padding-top: 60px !important;
   }
 }
-</style>
 
-<!-- 内联脚本 -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  
-  // ============ 菜单展开/关闭功能 ============
-  const menuToggle = document.getElementById('menuToggle');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  
-  if (menuToggle && dropdownMenu) {
-    // 点击菜单按钮
-    menuToggle.addEventListener('click', function(event) {
-      event.stopPropagation();
-      dropdownMenu.classList.toggle('show');
-    });
-    
-    // 点击页面其他地方关闭菜单
-    document.addEventListener('click', function() {
-      dropdownMenu.classList.remove('show');
-    });
-    
-    // 阻止菜单内部点击事件冒泡
-    dropdownMenu.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-    
-    // 点击菜单项后关闭菜单
-    const menuItems = dropdownMenu.querySelectorAll('.menu-item');
-    menuItems.forEach(function(item) {
-      item.addEventListener('click', function() {
-        dropdownMenu.classList.remove('show');
-      });
-    });
-  }
-  
-  // ============ 实时时间功能 ============
-  const datePart = document.querySelector('.date-part');
-  const timePart = document.querySelector('.time-part');
-
-  function updateTime() {
-    const now = new Date();
-    
-    // 获取UTC时间，然后加上8小时得到北京时间
-    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const beijingTime = new Date(utc + (3600000 * 8));
-    
-    // 获取日期：2025/12/1 格式
-    const year = beijingTime.getFullYear();
-    const month = beijingTime.getMonth() + 1;
-    const day = beijingTime.getDate();
-    const dateStr = `${year}/${month}/${day}`;
-    
-    // 获取时间：12:30:45 格式（精确到秒）
-    const hours = String(beijingTime.getHours()).padStart(2, '0');
-    const minutes = String(beijingTime.getMinutes()).padStart(2, '0');
-    const seconds = String(beijingTime.getSeconds()).padStart(2, '0');
-    const timeStr = `${hours}:${minutes}:${seconds}`;
-    
-    // 更新显示
-    if (datePart) datePart.textContent = dateStr;
-    if (timePart) timePart.textContent = timeStr;
-  }
-
-  // 立即更新一次，然后每秒更新
-  if (datePart && timePart) {
-    updateTime();
-    setInterval(updateTime, 1000); // 每秒更新一次
-  }
-  
-  // ============ 滚动效果 ============
-  const header = document.querySelector('.custom-header');
-  
-  if (header) {
-    window.addEventListener('scroll', function() {
-      if (window.scrollY > 20) {
-        header.style.boxShadow = '0 4px 25px rgba(0, 0, 0, 0.15)';
-        header.style.backdropFilter = 'blur(15px)';
-      } else {
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        header.style.backdropFilter = 'blur(10px)';
-      }
-    });
-  }
-    // ============ 紧凑音乐播放器功能 ============
-  const audioPlayer = document.getElementById('headerAudioPlayer');
-  const playPauseBtn = document.getElementById('playPauseBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const nowPlayingEl = document.getElementById('nowPlaying');
-
-  // 简单的播放列表（对应audio标签中的source）
-  const trackList = [
-    { title: '歌曲 1', src: '/music/song1.mp3' },
-    { title: '歌曲 2', src: '/music/song2.mp3' }
-    // 您可以在这里继续添加更多歌曲
-  ];
-  let currentTrackIndex = 0;
-
-  // 更新当前播放显示和按钮状态
-  function updatePlayerUI() {
-    nowPlayingEl.textContent = `♪ ${trackList[currentTrackIndex].title}`;
-    playPauseBtn.textContent = audioPlayer.paused ? '▶️' : '⏸️';
-  }
-
-  // 加载并播放指定索引的歌曲
-  function playTrack(index) {
-    if (index < 0 || index >= trackList.length) return;
-    currentTrackIndex = index;
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    audioPlayer.play()
-      .then(() => updatePlayerUI())
-      .catch(e => console.log('播放失败:', e));
-  }
-
-  // 事件监听
-  if (audioPlayer && playPauseBtn) {
-    // 播放/暂停
-    playPauseBtn.addEventListener('click', () => {
-      if (audioPlayer.paused) {
-        audioPlayer.play();
-      } else {
-        audioPlayer.pause();
-      }
-      updatePlayerUI();
-    });
-
-    // 上一首
-    prevBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex - 1;
-      if (newIndex < 0) newIndex = trackList.length - 1; // 循环到最后一首
-      playTrack(newIndex);
-    });
-
-    // 下一首
-    nextBtn.addEventListener('click', () => {
-      let newIndex = currentTrackIndex + 1;
-      if (newIndex >= trackList.length) newIndex = 0; // 循环到第一首
-      playTrack(newIndex);
-    });
-
-    // 当一首歌结束时自动下一首
-    audioPlayer.addEventListener('ended', () => {
-      nextBtn.click(); // 触发下一首点击事件
-    });
-
-    // 初始化UI
-    audioPlayer.src = trackList[currentTrackIndex].src;
-    updatePlayerUI();
-  }
-});
-</script>
-  <noscript>
-    <link rel="stylesheet" href="/kaorimiyazono518/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <!-- 自定义顶部导航栏 -->
-  <header class="custom-header">
-  <div class="header-container">
-    
-    <!-- 左侧：可展开的菜单按钮 -->
-    <div class="header-left">
-      <button class="menu-toggle" id="menuToggle">
-        <span class="menu-icon">☰</span>
-        <span class="menu-text">导航</span>
-      </button>
-      
-      <!-- 下拉菜单内容 -->
-      <div class="dropdown-menu" id="dropdownMenu">
-        <a href="/kaorimiyazono518/" class="menu-item">
-          <span class="menu-icon">🏠</span>
-          <span class="menu-label">首页</span>
-        </a>
-        <a href="/kaorimiyazono518/about" class="menu-item">
-          <span class="menu-icon">👤</span>
-          <span class="menu-label">关于</span>
-        </a>
-        <a href="/kaorimiyazono518/tags" class="menu-item">
-          <span class="menu-icon">🏷️</span>
-          <span class="menu-label">标签</span>
-        </a>
-        <a href="/kaorimiyazono518/categories" class="menu-item">
-          <span class="menu-icon">📁</span>
-          <span class="menu-label">分类</span>
-        </a>
-        <a href="/kaorimiyazono518/archives" class="menu-item">
-          <span class="menu-icon">📅</span>
-          <span class="menu-label">归档</span>
-        </a>
-      </div>
-    </div>
-    
-    <!-- 中间：音乐播放器 -->
-    <div class="header-center">
-      <div class="music-player-compact">
-        <!-- 歌曲信息显示 -->
-        <div class="now-playing" id="nowPlaying">- 未播放 -</div>
-        <!-- 播放器控制按钮 -->
-        <div class="player-controls-compact">
-          <button class="ctrl-btn" id="prevBtn" title="上一首">⏮</button>
-          <button class="ctrl-btn" id="playPauseBtn" title="播放/暂停">▶️</button>
-          <button class="ctrl-btn" id="nextBtn" title="下一首">⏭</button>
-        </div>
-      </div>
-      <!-- 隐藏的音频元素 -->
-      <audio id="headerAudioPlayer" loop>
-        <!-- 音乐文件请放置在 source/music/ 目录下 -->
-        <source src="/music/song1.mp3" type="audio/mpeg">
-        <source src="/music/song2.mp3" type="audio/mpeg">
-        您的浏览器不支持音频播放。
-      </audio>
-    </div>
-
-    <!-- 右侧：实时时间 -->
-    <div class="header-right">
-      <div class="time-display" id="timeDisplay">
-        <span class="date-part"></span>
-        <span class="time-part"></span>
-      </div>
-    </div>
-    
-  </div>
-</header>
-
-<!-- 内联样式 -->
-<style>
-/* 自定义顶部导航栏样式 */
-.custom-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+/* 隐藏原来的导航栏 */
+.site-nav {
+  display: none !important;
 }
-
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* 左侧菜单区域 */
-.header-left {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.menu-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.menu-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.menu-icon {
-  font-size: 18px;
-}
-
-.menu-text {
-  font-weight: 500;
-}
-
-/* 下拉菜单 */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 10px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 10001;
-  padding: 8px 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.dropdown-menu.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  border-left: 3px solid transparent;
-}
-
-.menu-item:hover {
-  background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
-  color: #667eea;
-  border-left: 3px solid #667eea;
-  padding-left: 22px;
-}
-
-.menu-item .menu-icon {
-  font-size: 16px;
-  width: 20px;
-  text-align: center;
-}
-
-.menu-item .menu-label {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* 中间链接区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* 中间：紧凑型音乐播放器区域 */
-.header-center {
-  flex: 1;
-  text-align: center;
-  overflow: hidden;
-  min-width: 0; /* 允许在空间不足时收缩 */
-}
-
-.music-player-compact {
-  display: inline-flex;
-  align-items: center;
-  gap: 15px;
-  padding: 6px 20px;
-  background: rgba(248, 249, 250, 0.9);
-  border-radius: 30px;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  white-space: nowrap;
-  max-width: 90%;
-}
-
-.now-playing {
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 180px; /* 防止在窄屏下过长 */
-}
-
-.player-controls-compact {
-  display: flex;
-  gap: 8px;
-}
-
-.ctrl-btn {
-  background: transparent;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  color: #667eea;
-  padding: 4px 8px;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  line-height: 1;
-}
-
-.ctrl-btn:hover {
-  background-color: rgba(102, 126, 234, 0.1);
-  transform: scale(1.1);
-}
-
-/* 右侧时间区域 */
-.header-right {
-  flex: 0 0 auto;
-}
-
-.time-display {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px 15px;
-  background: rgba(248, 249, 250, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.2);
-  border-radius: 8px;
-  min-width: 140px;
-  text-align: center;
-}
-
-.date-part {
-  font-size: 13px;
-  color: #666;
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-
-.time-part {
-  font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
-  font-size: 14px;
-  color: #667eea;
-  font-weight: 600;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-  .header-container {
-    padding: 0 10px;
-  }
-  
-  .menu-toggle .menu-text {
-    display: none;
-  }
-  
-  .center-links {
-    gap: 15px;
-    padding: 6px 12px;
-    max-width: 200px;
-  }
-  
-  .center-link {
-    font-size: 12px;
-  }
-  
-  .time-display {
-    min-width: 110px;
-    padding: 5px 10px;
-  }
-  
-  .date-part {
-    font-size: 11px;
-  }
-  
-  .time-part {
-    font-size: 12px;
-  }
-}
-
-/* 防止内容被header遮挡 */
-body {
-  padding-top: 70px !important;
-}
-
-@media (max-width: 768px) {
-  body {
-    padding-top: 60px !important;
-  }
 }
 </style>
 
@@ -956,8 +533,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // 简单的播放列表（对应audio标签中的source）
   const trackList = [
     { title: '歌曲 1', src: '/music/song1.mp3' },
-    { title: '歌曲 2', src: '/music/song2.mp3' }
-    // 您可以在这里继续添加更多歌曲
+    { title: '歌曲 2', src: '/music/song2.mp3' },
+    { title: '歌曲 3', src: '/music/song3.mp3' },
+    { title: '歌曲 4', src: '/music/song4.mp3' },
+    { title: '歌曲 5', src: '/music/song5.mp3' }
   ];
   let currentTrackIndex = 0;
 
@@ -972,8 +551,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (index < 0 || index >= trackList.length) return;
     currentTrackIndex = index;
     audioPlayer.src = trackList[currentTrackIndex].src;
+    // 立即更新UI
+    updatePlayerUI();
     audioPlayer.play()
-      .then(() => updatePlayerUI())
       .catch(e => console.log('播放失败:', e));
   }
 
@@ -1014,49 +594,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-  
-  <!-- 隐藏原来的导航栏 -->
-  <style>
-    .site-nav { display: none !important; }
-    .header { display: none !important; }
-  </style>
-
-  <main class="main">
-    <div class="column">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/kaorimiyazono518/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">Kaorimiyazono</p>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger" aria-label="Search" role="button">
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/kaorimiyazono518/custom-home/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/kaorimiyazono518/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/kaorimiyazono518/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/kaorimiyazono518/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/kaorimiyazono518/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
-  </ul>
-</nav>
-
-
-
-
 </header>
         
   
